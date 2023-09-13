@@ -30,4 +30,5 @@ public void setup()
         BookingDetailsResponse responseObject= DeserializationUtils.deserializeFromJson(jsonResponse, BookingDetailsResponse.class);
         System.out.println("The details on the response object is: "+responseObject);
     }
+//    test
 }
