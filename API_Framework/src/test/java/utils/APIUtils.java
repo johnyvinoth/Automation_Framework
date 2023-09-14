@@ -5,6 +5,8 @@ import io.restassured.response.Response;
 
 import endpoints.APIEndpoints;
 
+import java.util.List;
+
 import static endpoints.APIEndpoints.*;
 
 public class APIUtils {
@@ -27,7 +29,11 @@ public class APIUtils {
                 .body(requestBody)
                 .post(GetBookingBaseURL());
     }
-
+    public static List<Integer> getAvailableBookingIds()
+    {
+        Response response=RestAssured.get(GetBookingBaseURL());
+        return response.jsonPath().getList("bookingid");
+    }
     // Add methods for other HTTP methods (PUT, DELETE, etc.) if needed
 
     // You can also add other common utility methods here
