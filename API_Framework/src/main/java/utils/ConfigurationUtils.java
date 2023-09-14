@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class ConfigurationUtils {
-    private static final String CONFIG_FILE="config.properties";
+    private static final String CONFIG_FILE= "config.properties";
     private static Properties properties;
     static {
         properties=new Properties();

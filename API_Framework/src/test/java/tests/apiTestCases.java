@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 import utils.APIUtils;
 import utils.DeserializationUtils;
 
+
 import java.util.List;
 import java.util.Random;
 
@@ -58,6 +59,9 @@ public class apiTestCases extends APITestBase {
     @Test
     public static void TestGetBookingDetails() {
         GetBookingDetails(0);
-        GetBookingDetails(213);
+        GetBookingDetails(2920);
+//        TODO: need to change the logic to access the functions from BookingService.java
+
+
     }
 }

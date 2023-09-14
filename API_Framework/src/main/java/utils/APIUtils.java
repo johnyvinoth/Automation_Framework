@@ -3,8 +3,6 @@ package utils;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 
-import endpoints.APIEndpoints;
-
 import java.util.List;
 
 import static endpoints.APIEndpoints.*;
