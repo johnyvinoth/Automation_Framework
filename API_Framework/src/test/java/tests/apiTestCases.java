@@ -18,7 +18,7 @@ public void setup()
 }
     @Test
     public void TestGetBookingDetails(){
-        int userId=1060;
+        int userId=1437;
 //        String endpoint= APIEndpoints.UserDetailsEndPointsEndPoint(userId);
 
         Response response = APIUtils.getBooking(userId,authToken);
@@ -29,6 +29,8 @@ public void setup()
 
         BookingDetailsResponse responseObject= DeserializationUtils.deserializeFromJson(jsonResponse, BookingDetailsResponse.class);
         System.out.println("The details on the response object is: "+responseObject);
+//        assert responseObject != null;
+//        System.out.println(responseObject.getBookingdates());
     }
-//    test
+
 }
