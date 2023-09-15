@@ -9,18 +9,13 @@ public class DeserializationUtils {
     /**
      * Deserialize a JSON string to an object of the specified class and pretty print it.
      *
-     * @param json   The JSON string to be deserialized.
-     * @param clazz  The class of the object to be created.
+     * @param json  The JSON string to be deserialized.
+     * @param clazz The class of the object to be created.
      * @return A pretty printed JSON string representing the object, or null if deserialization fails.
      */
-    public static <T> String deserializeFromJson(String json, Class<T> clazz) {
+    public static <T> T deserializeFromJson(String json, Class<T> clazz) {
         try {
-            T deserializedObject = gson.fromJson(json, clazz);
-            if (deserializedObject != null) {
-                return gson.toJson(deserializedObject);
-            } else {
-                return null;
-            }
+            return gson.fromJson(json, clazz);
         } catch (JsonSyntaxException e) {
             // Handle any exceptions that occur during deserialization
             e.printStackTrace();
