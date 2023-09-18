@@ -9,13 +9,14 @@ public class APIEndpoints {
 //    public static final String GET_BOOKING_IDS=BOOKING_BASE_URI+"/booking/";
 
 //    Following is for Users API
-    public static String UserDetailsEndPoint(int userId)
+    public static String BookingDetailsEndPoint(int userId)
     {
-        return BOOKING_BASE_URI+userId;
+//        return BOOKING_BASE_URI+userId;
+        return String.valueOf(userId);
     }
     public static String GetBookingBaseURL()
     {
-        return BOOKING_BASE_URI;
+        return BOOKING_BASE_URI+"booking";
     }
     public static final String USERS="/public/v2/users";
 }
