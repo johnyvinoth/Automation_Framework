@@ -51,7 +51,7 @@ public class apiTestCases extends APITestBase {
             String jsonResponse = response.getBody().asString();
 
             System.out.println("The status code is: " + response.getStatusCode());
-            /*TODO: Need to fix the auth code not being passed to the requests which requires it. AuthTokeProvider is giving the token but its not passed in the request*/
+
             System.out.println(jsonResponse);
 
 //            Check if the status is code is 404
@@ -87,4 +87,5 @@ public class apiTestCases extends APITestBase {
 
 
     }
+//
 }
