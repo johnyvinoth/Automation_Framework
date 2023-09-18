@@ -1,15 +1,21 @@
 package services;
 
 import io.restassured.response.Response;
+import models.BookingDetailsResponse;
 import utils.APIUtils;
 import utils.DeserializationUtils;
-import models.BookingDetailsResponse;
-
 import java.util.List;
-import java.util.Random;
+import static endpoints.APIEndpoints.GetBookingBaseURL;
+import static endpoints.APIEndpoints.BookingDetailsEndPoint;
 
 public class BookingService {
-    public static Response getBookingDetails(int bookingId, String authToken) {
+    public static List<Integer> getAvailableBookingIds()
+    {
+//        Response response= RestAssured.get(GetBookingBaseURL());
+        Response response= APIUtils.get(GetBookingBaseURL());
+        return response.jsonPath().getList("bookingid");
+    }
+    public static Response getBookingDetails(int userId) {
         /**
          * Retrieves booking details by sending a GET request to the API endpoint.
          *
@@ -17,11 +23,12 @@ public class BookingService {
          * @param authToken The authentication token required for accessing the API.
          * @return The response from the API, including status code, headers, and the response body.
          */
-        return APIUtils.getBooking(bookingId, authToken);
+//        return APIUtils.getBooking(userId, authToken);
+        return APIUtils.get(BookingDetailsEndPoint(userId));
 
     }
 
-    public static BookingDetailsResponse getBookingDetailsAsObject(int bookingId, String authToken) {
+    public static BookingDetailsResponse getBookingDetailsAsObject(int bookingId) {
         /**
          * Retrieves booking details and parses the response into a BookingDetailsResponse object.
          *
@@ -30,7 +37,7 @@ public class BookingService {
          * @return An object representing the booking details if successful, or null in case of an error.
          */
 
-        Response response = getBookingDetails(bookingId, authToken);
+        Response response = getBookingDetails(bookingId);
         String jsonResponse = response.getBody().asString();
 
         System.out.println("The status code is: " + response.getStatusCode());
