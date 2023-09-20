@@ -5,6 +5,8 @@ import models.BookingDetailsResponse;
 import utils.APIUtils;
 import utils.DeserializationUtils;
 import java.util.List;
+import java.util.Random;
+
 import static endpoints.APIEndpoints.GetBookingBaseURL;
 import static endpoints.APIEndpoints.BookingDetailsEndPoint;
 
@@ -28,6 +30,25 @@ public class BookingService {
 
     }
 
+    public static String getRandomBookingDetailsResponse() {
+        List<Integer> availableBookingIds = BookingService.getAvailableBookingIds();
+        String jsonResponse = null;
+        if (!availableBookingIds.isEmpty()) {
+            Random random = new Random();
+            int randomIndex = random.nextInt(availableBookingIds.size());
+            int selectedBookingId = availableBookingIds.get(randomIndex);
+            System.out.println("Random bookingId is used is :" + selectedBookingId);
+
+            Response response = getBookingDetails(selectedBookingId);
+
+            jsonResponse = response.getBody().asString();
+            System.out.println("The status code is: " + response.getStatusCode());
+
+//            System.out.println(jsonResponse);
+
+        }
+        return jsonResponse;
+    }
     public static BookingDetailsResponse getBookingDetailsAsObject(int bookingId) {
         /**
          * Retrieves booking details and parses the response into a BookingDetailsResponse object.

@@ -5,6 +5,7 @@ import auth.AuthTokenProvider;
 import io.restassured.response.Response;
 import jdk.jfr.StackTrace;
 import models.BookingDetailsResponse;
+import org.apache.http.impl.conn.SystemDefaultRoutePlanner;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import services.BookingService;
@@ -15,9 +16,11 @@ import utils.exceptions.NotFoundException;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import static services.BookingService.getBookingDetails;
+import static services.BookingService.getRandomBookingDetailsResponse;
 
 public class apiTestCases extends APITestBase {
     private static String authToken;
@@ -60,30 +63,40 @@ public class apiTestCases extends APITestBase {
                 System.out.println("The details on the response object is: " + responseObject);
                 assert responseObject != null;
                 System.out.println(responseObject.getBookingdates());
-            } else if (response.statusCode()==404) {
+            } else if (response.statusCode() == 404) {
                 throw new NotFoundException("The requested booking ID is not found.");
 
-            }
-            else
-            {
+            } else {
                 throw new Exception();
             }
-        }catch (NotFoundException e) {
+        } catch (NotFoundException e) {
             // Handle the custom exception for 404
             System.out.println("Error: " + e.getMessage());
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
             e.printStackTrace();
         }
 
     }
 
-
     @Test
+    public void TestNoPOJO() {
+        String jsonResponse = getRandomBookingDetailsResponse();
+        Map<String, Object> dataMap = deserializeJsonResponse(jsonResponse);
+
+        System.out.println(dataMap);
+        Map<String,Object> bookingdates= (Map<String, Object>) dataMap.get("bookingdates");
+        System.out.println("Deposit Paid :"+bookingdates.get("checkin"));
+
+
+    }
+
+
+    @Test(enabled = false)
     public static void TestGetBookingDetails() {
 //        GetBookingDetails(0);
-        GetBookingDetails(5254544);
+//        GetBookingDetails(5254544);
+//        TestNoPOJO(3276);
 
 
     }
