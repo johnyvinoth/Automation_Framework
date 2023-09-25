@@ -1,5 +1,6 @@
 package services;
 
+import endpoints.APIEndpoints;
 import io.restassured.response.Response;
 import models.BookingDetailsResponse;
 import utils.APIUtils;
@@ -8,16 +9,20 @@ import java.util.List;
 import java.util.Random;
 
 import static endpoints.APIEndpoints.GetBookingBaseURL;
-import static endpoints.APIEndpoints.BookingDetailsEndPoint;
+
 
 public class BookingService {
+
+    /**
+     * Retrieves the available booking ids.
+     *
+     * @return list of available booking ids.
+     */
     public static List<Integer> getAvailableBookingIds()
     {
-//        Response response= RestAssured.get(GetBookingBaseURL());
         Response response= APIUtils.get(GetBookingBaseURL());
         return response.jsonPath().getList("bookingid");
     }
-    public static Response getBookingDetails(int userId) {
         /**
          * Retrieves booking details by sending a GET request to the API endpoint.
          *
@@ -25,11 +30,18 @@ public class BookingService {
          * @param authToken The authentication token required for accessing the API.
          * @return The response from the API, including status code, headers, and the response body.
          */
-//        return APIUtils.getBooking(userId, authToken);
-        return APIUtils.get(BookingDetailsEndPoint(userId));
+
+    public static Response getBookingDetails(int userId) {
+//        return APIUtils.get(BookingDetailsEndPoint(userId));
+        return APIUtils.get(String.valueOf(userId));
 
     }
-
+    /**
+     * Retrieves the details of a random booking id from the available booking ids.
+     *
+     * @return Retrieves a String with JSON body of the response with the details of a random booking id
+     * from the available booking ids.
+     */
     public static String getRandomBookingDetailsResponse() {
         List<Integer> availableBookingIds = BookingService.getAvailableBookingIds();
         String jsonResponse = null;
@@ -39,7 +51,7 @@ public class BookingService {
             int selectedBookingId = availableBookingIds.get(randomIndex);
             System.out.println("Random bookingId is used is :" + selectedBookingId);
 
-            Response response = getBookingDetails(selectedBookingId);
+            Response response = BookingService.getBookingDetails(selectedBookingId);
 
             jsonResponse = response.getBody().asString();
             System.out.println("The status code is: " + response.getStatusCode());
@@ -49,7 +61,11 @@ public class BookingService {
         }
         return jsonResponse;
     }
-    public static BookingDetailsResponse getBookingDetailsAsObject(int bookingId) {
+    public static String postCreateBooking(String body)
+    {
+        Response response= APIUtils.post(APIEndpoints.CreateBookingEndPoint(),body);
+        return response.getBody().asString();
+    }
         /**
          * Retrieves booking details and parses the response into a BookingDetailsResponse object.
          *
@@ -57,8 +73,9 @@ public class BookingService {
          * @param authToken The authentication token required for accessing the API.
          * @return An object representing the booking details if successful, or null in case of an error.
          */
+    public static BookingDetailsResponse getBookingDetailsAsObject(int bookingId) {
 
-        Response response = getBookingDetails(bookingId);
+        Response response = BookingService.getBookingDetails(bookingId);
         String jsonResponse = response.getBody().asString();
 
         System.out.println("The status code is: " + response.getStatusCode());

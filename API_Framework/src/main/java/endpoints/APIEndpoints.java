@@ -3,20 +3,28 @@ package endpoints;
 import utils.ConfigurationUtils;
 
 public class APIEndpoints {
-    //    Following is for Booking API
+    //    Following are the endpoints for Booking API
     public static final String BOOKING_BASE_URI= ConfigurationUtils.getBaseURI("BaseURL_Booking");
-//    public static final String GET_BOOKING_DETAILS=BOOKING_BASE_URI;
-//    public static final String GET_BOOKING_IDS=BOOKING_BASE_URI+"/booking/";
 
-//    Following is for Users API
-    public static String BookingDetailsEndPoint(int userId)
-    {
-//        return BOOKING_BASE_URI+userId;
-        return String.valueOf(userId);
-    }
     public static String GetBookingBaseURL()
     {
         return BOOKING_BASE_URI+"booking";
     }
+    public static String CreateBookingEndPoint()
+    {
+        return BOOKING_BASE_URI+"booking";
+    }
+    public static String UpdateBookingEndPoint(int userId)
+    {
+        return BOOKING_BASE_URI+"booking";
+    }
+    public static String DeleteBookingEndPoint(int userId)
+    {
+        return BOOKING_BASE_URI+"booking";
+    }
+
+
+
+    //    Following are the endpoints for Users API
     public static final String USERS="/public/v2/users";
 }

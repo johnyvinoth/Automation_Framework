@@ -10,24 +10,6 @@ import static endpoints.APIEndpoints.*;
 public class APIUtils {
 
     private static final String CONTENT_TYPE = "application/json";
-//    private static String authToken = AuthTokenProvider.getAuthToken();
-//    public static Response getBooking(int userId, String authToken) {
-//        return RestAssured
-//                .given()
-//                .header("Authorization", "Bearer " + authToken)
-//                .header("Content-Type", CONTENT_TYPE)
-//                .get(BookingDetailsEndPoint(userId));
-//    }
-//
-//    public static Response post(String endpoint, String authToken, String requestBody) {
-//        return RestAssured
-//                .given()
-//                .header("Authorization", "Bearer " + authToken)
-//                .header("Content-Type", CONTENT_TYPE)
-//                .body(requestBody)
-//                .post(GetBookingBaseURL());
-//    }
-
     private static final String BASE_URL = GetBookingBaseURL();
     private static RequestSpecification requestSpec;
 
