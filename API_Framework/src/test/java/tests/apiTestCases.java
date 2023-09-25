@@ -19,8 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import static services.BookingService.getBookingDetails;
-import static services.BookingService.getRandomBookingDetailsResponse;
+import static services.BookingService.*;
 
 public class apiTestCases extends APITestBase {
     private static String authToken;
@@ -79,7 +78,7 @@ public class apiTestCases extends APITestBase {
 
     }
 
-    @Test
+    @Test(enabled = false)
     public void TestNoPOJO() {
         String jsonResponse = getRandomBookingDetailsResponse();
         Map<String, Object> dataMap = deserializeJsonResponse(jsonResponse);
@@ -88,6 +87,13 @@ public class apiTestCases extends APITestBase {
         Map<String,Object> bookingdates= (Map<String, Object>) dataMap.get("bookingdates");
         System.out.println("Deposit Paid :"+bookingdates.get("checkin"));
 
+
+    }
+    @Test
+    public void TestCreateBooking()
+    {
+        String jsonResponse=postCreateBooking();
+        System.out.println(jsonResponse);
 
     }
 

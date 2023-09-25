@@ -5,7 +5,10 @@ import io.restassured.response.Response;
 import models.BookingDetailsResponse;
 import utils.APIUtils;
 import utils.DeserializationUtils;
+import utils.SerializationUtils;
+
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import static endpoints.APIEndpoints.GetBookingBaseURL;
@@ -61,9 +64,17 @@ public class BookingService {
         }
         return jsonResponse;
     }
-    public static String postCreateBooking(String body)
+    public static String postCreateBooking()
     {
-        Response response= APIUtils.post(APIEndpoints.CreateBookingEndPoint(),body);
+// TODO: Need to do little code clean up on the Serialization code.
+        Map<String, Object> model= SerializationUtils.readModelFromFile("src/main/java/payloads/createBookingBody.json");
+        if(model !=null)
+        {
+            model.put("firstname","Naethan");
+            model.put("lastname","Johny");
+        }
+        String serializedJson=SerializationUtils.serializeToJson(model);
+        Response response= APIUtils.post(APIEndpoints.CreateBookingEndPoint(),serializedJson);
         return response.getBody().asString();
     }
         /**
