@@ -11,10 +11,12 @@ import org.testng.annotations.Test;
 import services.BookingService;
 import utils.APIUtils;
 import utils.DeserializationUtils;
+import utils.JsonUtils;
 import utils.exceptions.NotFoundException;
 
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -84,16 +86,47 @@ public class apiTestCases extends APITestBase {
         Map<String, Object> dataMap = deserializeJsonResponse(jsonResponse);
 
         System.out.println(dataMap);
-        Map<String,Object> bookingdates= (Map<String, Object>) dataMap.get("bookingdates");
-        System.out.println("Deposit Paid :"+bookingdates.get("checkin"));
+        Map<String, Object> bookingdates = (Map<String, Object>) dataMap.get("bookingdates");
+        System.out.println("Checkin Date :" + bookingdates.get("checkin"));
 
 
     }
+
     @Test
-    public void TestCreateBooking()
-    {
-        String jsonResponse=postCreateBooking();
-        System.out.println(jsonResponse);
+    public void TestCreateBooking() {
+        Map<String, Object> model = new HashMap<>();
+
+        // Add key-value pairs to represent the JSON structure
+        model.put("firstname", "Naethan");
+        model.put("lastname", "Johny vinoth");
+//        model.put("bookingdates", new HashMap<String, Object>() {{
+//            put("checkin", "2023-01-01");
+//            put("checkout", "2023-01-10");
+//        }});
+        model.put("additionalneeds", "Breakfast");
+
+//  Create a nested map for bookingdates.
+
+        Map<String, Object> bookingdates = new HashMap<>();
+        bookingdates.put("checkin","2018-01-01");
+        bookingdates.put("checkout","2019-01-01");
+
+        // Add the nested map to the main model
+        model.put("bookingdates", bookingdates);
+
+
+        String jsonResponse = postCreateBooking(model);
+        String prettyPrintedJson=DeserializationUtils.prettyPrintJson(jsonResponse);
+        System.out.println(prettyPrintedJson);
+
+        String firstname= JsonUtils.getNestedValueFromJson(jsonResponse,"booking","firstname");
+        String checkingDate= JsonUtils.getNestedValueFromJson(jsonResponse,"booking","bookingdates","checkin");
+        Double totalPrice=JsonUtils.getNestedValueFromJson(jsonResponse,"booking","totalprice");
+
+        System.out.println("Firstname :" + firstname);
+        System.out.println("Checkin Date :" + checkingDate);
+        System.out.println("Total Price :" + totalPrice);
+
 
     }
 

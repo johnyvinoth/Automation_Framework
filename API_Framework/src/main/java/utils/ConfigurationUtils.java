@@ -20,6 +20,12 @@ public class ConfigurationUtils {
     public static String getBaseURI(String resourceName)
     {
         return properties.getProperty(resourceName);
+
+    }
+    public static String getModelJsonLocation(String resourceName)
+    {
+        return properties.getProperty(resourceName);
+
     }
 
 }

@@ -4,6 +4,7 @@ import endpoints.APIEndpoints;
 import io.restassured.response.Response;
 import models.BookingDetailsResponse;
 import utils.APIUtils;
+import utils.ConfigurationUtils;
 import utils.DeserializationUtils;
 import utils.SerializationUtils;
 
@@ -21,24 +22,25 @@ public class BookingService {
      *
      * @return list of available booking ids.
      */
-    public static List<Integer> getAvailableBookingIds()
-    {
-        Response response= APIUtils.get(GetBookingBaseURL());
+    public static List<Integer> getAvailableBookingIds() {
+        Response response = APIUtils.get(GetBookingBaseURL());
         return response.jsonPath().getList("bookingid");
     }
-        /**
-         * Retrieves booking details by sending a GET request to the API endpoint.
-         *
-         * @param bookingId The unique identifier for the booking to retrieve.
-         * @param authToken The authentication token required for accessing the API.
-         * @return The response from the API, including status code, headers, and the response body.
-         */
+
+    /**
+     * Retrieves booking details by sending a GET request to the API endpoint.
+     *
+     * @param bookingId The unique identifier for the booking to retrieve.
+     * @param authToken The authentication token required for accessing the API.
+     * @return The response from the API, including status code, headers, and the response body.
+     */
 
     public static Response getBookingDetails(int userId) {
 //        return APIUtils.get(BookingDetailsEndPoint(userId));
         return APIUtils.get(String.valueOf(userId));
 
     }
+
     /**
      * Retrieves the details of a random booking id from the available booking ids.
      *
@@ -64,26 +66,32 @@ public class BookingService {
         }
         return jsonResponse;
     }
-    public static String postCreateBooking()
-    {
-// TODO: Need to do little code clean up on the Serialization code.
-        Map<String, Object> model= SerializationUtils.readModelFromFile("src/main/java/payloads/createBookingBody.json");
-        if(model !=null)
-        {
-            model.put("firstname","Naethan");
-            model.put("lastname","Johny");
+
+    /**
+     * Sends a POST request to create a booking with the provided JSON data.
+     *
+     * @param model A Map representing the JSON data structure for creating a booking.
+     * @return The JSON response string received from the server.
+     */
+    public static String postCreateBooking(Map<String, Object> model) {
+
+        Map<String, Object> jsonStructure = SerializationUtils.readModelFromFile(ConfigurationUtils.getModelJsonLocation("CreateBooking_ModelJson"));
+        if (jsonStructure != null && model != null) {
+            jsonStructure.putAll(model);
+
         }
-        String serializedJson=SerializationUtils.serializeToJson(model);
-        Response response= APIUtils.post(APIEndpoints.CreateBookingEndPoint(),serializedJson);
+        String serializedJson = SerializationUtils.serializeToJson(jsonStructure);
+        Response response = APIUtils.post(APIEndpoints.CreateBookingEndPoint(), serializedJson);
         return response.getBody().asString();
     }
-        /**
-         * Retrieves booking details and parses the response into a BookingDetailsResponse object.
-         *
-         * @param bookingId The unique identifier for the booking to retrieve.
-         * @param authToken The authentication token required for accessing the API.
-         * @return An object representing the booking details if successful, or null in case of an error.
-         */
+
+    /**
+     * Retrieves booking details and parses the response into a BookingDetailsResponse object.
+     *
+     * @param bookingId The unique identifier for the booking to retrieve.
+     * @param authToken The authentication token required for accessing the API.
+     * @return An object representing the booking details if successful, or null in case of an error.
+     */
     public static BookingDetailsResponse getBookingDetailsAsObject(int bookingId) {
 
         Response response = BookingService.getBookingDetails(bookingId);

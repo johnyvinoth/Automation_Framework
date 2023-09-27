@@ -55,6 +55,25 @@ public class DeserializationUtils {
             return null;
         }
     }
+    /**
+     * Pretty-print a JSON string.
+     *
+     * @param json The JSON string to be pretty-printed.
+     * @return A pretty-printed JSON string.
+     */
+    public static String prettyPrintJson(String json)
+    {
+        try
+        {
+            Object jsonObject=gson.fromJson(json,Object.class);
+            return gson.toJson(jsonObject);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return json;
+        }
+    }
 }
 
 
