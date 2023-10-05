@@ -1,30 +1,25 @@
 package tests;
 
 import api.APITestBase;
-import auth.AuthTokenProvider;
 import io.restassured.response.Response;
-import jdk.jfr.StackTrace;
 import models.BookingDetailsResponse;
-import org.apache.http.impl.conn.SystemDefaultRoutePlanner;
-import org.testng.annotations.BeforeClass;
+import models.DynamicJSONModel;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import services.BookingService;
-import utils.APIUtils;
 import utils.DeserializationUtils;
 import utils.JsonUtils;
 import utils.exceptions.NotFoundException;
 
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 import static services.BookingService.*;
+import static tests.apiTestCases.getBookingDetails_New;
 
 public class apiTestCases extends APITestBase {
     private static String authToken;
+    public static int bookingid;
 
 //    @BeforeClass
 ////    public void setup() {
@@ -80,13 +75,28 @@ public class apiTestCases extends APITestBase {
 
     }
 
+    public static String getBookingDetails_New(int bookingId) {
+        Response response = null;
+        if (bookingId != 0) {
+            response = getBookingDetails(bookingId);
+//            response = BookingService.getBookingDetails(bookingId);
+        }
+
+//        DynamicJSONModel dataMap = deserializeJsonResponse_new(response.getBody().asString());
+//        return dataMap;
+        assert response != null;
+        return response.getBody().asString();
+    }
+
     @Test(enabled = false)
-    public void TestNoPOJO() {
+    public static void TestNoPOJO() {
         String jsonResponse = getRandomBookingDetailsResponse();
-        Map<String, Object> dataMap = deserializeJsonResponse(jsonResponse);
+//        Map<String, Object> dataMap = deserializeJsonResponse(jsonResponse);
+        DynamicJSONModel dataMap = deserializeJsonResponse_new(jsonResponse);
 
         System.out.println(dataMap);
-        Map<String, Object> bookingdates = (Map<String, Object>) dataMap.get("bookingdates");
+//        Map<String, Object> bookingdates = (Map<String, Object>) dataMap.get("bookingdates");
+        DynamicJSONModel bookingdates = (DynamicJSONModel) dataMap.get("bookingdates");
         System.out.println("Checkin Date :" + bookingdates.get("checkin"));
 
 
@@ -108,35 +118,74 @@ public class apiTestCases extends APITestBase {
 //  Create a nested map for bookingdates.
 
         Map<String, Object> bookingdates = new HashMap<>();
-        bookingdates.put("checkin","2018-01-01");
-        bookingdates.put("checkout","2019-01-01");
+        bookingdates.put("checkin", "2018-01-01");
+        bookingdates.put("checkout", "2019-01-01");
 
         // Add the nested map to the main model
         model.put("bookingdates", bookingdates);
 
 
         String jsonResponse = postCreateBooking(model);
-        String prettyPrintedJson=DeserializationUtils.prettyPrintJson(jsonResponse);
+
+//        Following code to print the response JSON in readable format.
+        String prettyPrintedJson = DeserializationUtils.prettyPrintJson(jsonResponse);
         System.out.println(prettyPrintedJson);
 
-        String firstname= JsonUtils.getNestedValueFromJson(jsonResponse,"booking","firstname");
-        String checkingDate= JsonUtils.getNestedValueFromJson(jsonResponse,"booking","bookingdates","checkin");
-        Double totalPrice=JsonUtils.getNestedValueFromJson(jsonResponse,"booking","totalprice");
+        // Getting the values under each field for validation.
+        Double bookingIdDouble = JsonUtils.getNestedValueFromJson(jsonResponse, "bookingid");
+        if (bookingIdDouble != null) {
+            bookingid = bookingIdDouble.intValue();
+        } else {
+            // Handle the case where "bookingid" is not found or is null
+        }
+//        bookingid = ((Double) Objects.requireNonNull(JsonUtils.getNestedValueFromJson(jsonResponse, "bookingid"))).intValue();
 
+        String firstname = JsonUtils.getNestedValueFromJson(jsonResponse, "booking", "firstname");
+        String checkingDate = JsonUtils.getNestedValueFromJson(jsonResponse, "booking", "bookingdates", "checkin");
+        Double totalPrice = JsonUtils.getNestedValueFromJson(jsonResponse, "booking", "totalprice");
+
+
+        System.out.println("BookingId :" + bookingid);
         System.out.println("Firstname :" + firstname);
         System.out.println("Checkin Date :" + checkingDate);
         System.out.println("Total Price :" + totalPrice);
 
+        Assert.assertEquals(model.get("firstname"), firstname);
+        Assert.assertEquals(bookingdates.get("checkin"), checkingDate);
 
     }
 
 
-    @Test(enabled = false)
+    @Test(enabled = true, dependsOnMethods = "TestCreateBooking")
     public static void TestGetBookingDetails() {
-//        GetBookingDetails(0);
-//        GetBookingDetails(5254544);
-//        TestNoPOJO(3276);
 
+//        GetBookingDetails(bookingid);
+//        GetBookingDetails(0);
+        String jsonResponse = getBookingDetails_New(bookingid);
+        String prettyPrintedJson = DeserializationUtils.prettyPrintJson(jsonResponse);
+        System.out.println(prettyPrintedJson);
+        Double bookingIdDouble = JsonUtils.getNestedValueFromJson(jsonResponse, "bookingid");
+        if (bookingIdDouble != null) {
+            bookingid = bookingIdDouble.intValue();
+        } else {
+            // Handle the case where "bookingid" is not found or is null
+        }
+//        bookingid = ((Double) Objects.requireNonNull(JsonUtils.getNestedValueFromJson(jsonResponse, "bookingid"))).intValue();
+
+        String firstname = JsonUtils.getNestedValueFromJson(jsonResponse,  "firstname");
+        String checkingDate = JsonUtils.getNestedValueFromJson(jsonResponse, "bookingdates", "checkin");
+        Double totalPrice = JsonUtils.getNestedValueFromJson(jsonResponse,  "totalprice");
+
+
+        System.out.println("BookingId :" + bookingid);
+        System.out.println("Firstname :" + firstname);
+        System.out.println("Checkin Date :" + checkingDate);
+        System.out.println("Total Price :" + totalPrice);
+
+//        TestNoPOJO(bookingid);
+
+
+//        System.out.println("The details created is: " + model.getModel());
 
     }
 //

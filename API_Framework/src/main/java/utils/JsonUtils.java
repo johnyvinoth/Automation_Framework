@@ -1,5 +1,6 @@
 package utils;
 import api.APITestBase;
+import models.DynamicJSONModel;
 
 import java.util.Map;
 
@@ -15,8 +16,10 @@ public class JsonUtils extends APITestBase {
      */
     public static <T> T getNestedValueFromJson(String jsonResponse, String... keys)
     {
-        Map<String, Object> dataMap=deserializeJsonResponse(jsonResponse);
+        Map<String, Object> dataMap= deserializeJsonResponse(jsonResponse);
         Map<String, Object> currentMap=dataMap;
+//        DynamicJSONModel dataMap=deserializeJsonResponse(jsonResponse);
+//        DynamicJSONModel currentMap=dataMap;
 
         for(String key:keys)
         {
@@ -26,6 +29,7 @@ public class JsonUtils extends APITestBase {
                 if(value instanceof Map)
                 {
                     currentMap=(Map<String, Object>) value;
+//                    currentMap=(DynamicJSONModel) value;
                 }
                 else {
                     try
