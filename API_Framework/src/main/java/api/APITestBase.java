@@ -18,8 +18,10 @@ public class APITestBase {
 
     protected static DynamicJSONModel deserializeJsonResponse_new(String jsonResponse) {
         try {
-            Type mapType = new TypeToken<DynamicJSONModel>() {}.getType();
-            return DeserializationUtils.deserializeFromJson(jsonResponse, mapType);
+//            Type mapType = new TypeToken<DynamicJSONModel>() {}.getType();
+//            return DeserializationUtils.deserializeFromJson(jsonResponse, mapType);
+//            Class<? extends DynamicJSONModel> DynamicJSONModel = null;
+            return DeserializationUtils.deserializeFromJsonToDynamicObject(jsonResponse, DynamicJSONModel.class);
         } catch (JsonSyntaxException e) {
             e.printStackTrace(); // Log the error
             return null; // Return null or another appropriate value to handle the error

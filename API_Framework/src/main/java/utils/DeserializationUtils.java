@@ -55,6 +55,17 @@ public class DeserializationUtils {
             return null;
         }
     }
+
+    public static <T> T deserializeFromJsonToDynamicObject(String json, Class<T> clazz) {
+        try {
+
+            return gson.fromJson(json,clazz);
+        } catch (JsonSyntaxException e) {
+            // Handle any exceptions that occur during deserialization
+            e.printStackTrace();
+            return null;
+        }
+    }
     /**
      * Pretty-print a JSON string.
      *

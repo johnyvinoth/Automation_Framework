@@ -12,10 +12,13 @@ import utils.JsonUtils;
 import utils.exceptions.NotFoundException;
 
 
+
+
 import java.util.*;
 
 import static services.BookingService.*;
 import static tests.apiTestCases.getBookingDetails_New;
+import static utils.JsonUtils.*;
 
 public class apiTestCases extends APITestBase {
     private static String authToken;
@@ -88,21 +91,21 @@ public class apiTestCases extends APITestBase {
         return response.getBody().asString();
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public static void TestNoPOJO() {
         String jsonResponse = getRandomBookingDetailsResponse();
-//        Map<String, Object> dataMap = deserializeJsonResponse(jsonResponse);
-        DynamicJSONModel dataMap = deserializeJsonResponse_new(jsonResponse);
+        Map<String, Object> dataMap = deserializeJsonResponse(jsonResponse);
+//        DynamicJSONModel dataMap = deserializeJsonResponse_new(jsonResponse);
 
         System.out.println(dataMap);
-//        Map<String, Object> bookingdates = (Map<String, Object>) dataMap.get("bookingdates");
-        DynamicJSONModel bookingdates = (DynamicJSONModel) dataMap.get("bookingdates");
+        Map<String, Object> bookingdates = (Map<String, Object>) dataMap.get("bookingdates");
+//        DynamicJSONModel bookingdates = (DynamicJSONModel) dataMap.get("bookingdates");
         System.out.println("Checkin Date :" + bookingdates.get("checkin"));
 
 
     }
 
-    @Test
+    @Test(enabled = true)
     public void TestCreateBooking() {
         Map<String, Object> model = new HashMap<>();
 
@@ -186,6 +189,20 @@ public class apiTestCases extends APITestBase {
 
 
 //        System.out.println("The details created is: " + model.getModel());
+
+    }
+
+    @Test
+    public  static void TestGetNestedValueFromJSON()
+    {
+        String filePath="src/main/java/models/createBookingResp.json";
+        String jsonResponse=JsonUtils.readJsonFromFile(filePath);
+
+        System.out.println(jsonResponse);
+
+        TestNoPOJO();
+
+        Double bookingId=getNestedValueFromJson(jsonResponse,"bookingid");
 
     }
 //

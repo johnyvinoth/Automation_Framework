@@ -2,6 +2,10 @@ package utils;
 import api.APITestBase;
 import models.DynamicJSONModel;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Map;
 
 public class JsonUtils extends APITestBase {
@@ -18,7 +22,7 @@ public class JsonUtils extends APITestBase {
     {
         Map<String, Object> dataMap= deserializeJsonResponse(jsonResponse);
         Map<String, Object> currentMap=dataMap;
-//        DynamicJSONModel dataMap=deserializeJsonResponse(jsonResponse);
+//        DynamicJSONModel dataMap=deserializeJsonResponse_new(jsonResponse);
 //        DynamicJSONModel currentMap=dataMap;
 
         for(String key:keys)
@@ -50,6 +54,57 @@ public class JsonUtils extends APITestBase {
         }
                 return null; // Key hierarchy doesn't match the structure.
 
+    }
+    public static <T> T getNestedValueFromJson_dynamic(String jsonResponse, String... keys)
+    {
+//        Map<String, Object> dataMap= deserializeJsonResponse(jsonResponse);
+//        Map<String, Object> currentMap=dataMap;
+        DynamicJSONModel dataMap=deserializeJsonResponse_new(jsonResponse);
+        DynamicJSONModel currentMap=dataMap;
+
+        for(String key:keys)
+        {
+            if(currentMap.containsKey(key))
+            {
+                Object value=currentMap.get(key);
+                if(value instanceof Map)
+                {
+//                    currentMap=(Map<String, Object>) value;
+                    currentMap=(DynamicJSONModel) value;
+                }
+                else {
+                    try
+                    {
+
+                        return (T) value;
+                    }catch (ClassCastException e)
+                    {
+                        e.printStackTrace();
+                        return null;
+                    }
+                }
+            }
+            else
+            {
+                return null; //Key not found
+            }
+        }
+        return null; // Key hierarchy doesn't match the structure.
+
+    }
+
+    public static String readJsonFromFile(String filePath)
+    {
+        try
+        {
+            String jsonContent=new String(Files.readAllBytes(Paths.get(filePath)));
+            return jsonContent;
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 
