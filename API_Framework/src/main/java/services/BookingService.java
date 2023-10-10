@@ -3,10 +3,7 @@ package services;
 import endpoints.APIEndpoints;
 import io.restassured.response.Response;
 import models.BookingDetailsResponse;
-import utils.APIUtils;
-import utils.ConfigurationUtils;
-import utils.DeserializationUtils;
-import utils.SerializationUtils;
+import utils.*;
 
 import java.util.List;
 import java.util.Map;
@@ -86,6 +83,51 @@ public class BookingService {
     }
 
     /**
+     * Sends a POST request to update a booking with the provided JSON data.
+     *
+     * @param model A Map representing the JSON data structure for creating a booking.
+     * @return The JSON response string received from the server.
+     */
+    public static String putUpdateBooking(Map<String, Object> model, int bookingId) {
+
+        Map<String, Object> jsonStructure = SerializationUtils.readModelFromFile(ConfigurationUtils.getModelJsonLocation("UpdateBooking_ModelJson"));
+        if (jsonStructure != null && model != null) {
+            jsonStructure.putAll(model);
+
+        }
+        String serializedJson = SerializationUtils.serializeToJson(jsonStructure);
+        Response response = APIUtils.put(APIEndpoints.UpdateBookingEndPoint(bookingId), serializedJson);
+        if (response.getStatusCode() == 200) {
+
+            System.out.println("The Status code for update request is: " + response.statusCode());
+            return response.getBody().asString();
+        } else {
+
+            System.out.println("The response for the put request is: " + response.getBody().asString() + " \n and the status code is: " + response.statusCode());
+        }
+        return null;
+    }
+
+    /**
+     * Sends a DELETE request to delete a booking id.
+     *
+     * @param bookingId int booking id to be deleted.
+     * @return The JSON response string received from the server.
+     */
+    public static String DELETEBooking(int bookingId) {
+        Response response = APIUtils.delete(APIEndpoints.DeleteBookingEndPoint(bookingId));
+        if (response.getStatusCode() == 200 || response.getStatusCode()==201) {
+
+            System.out.println("The Status code for update request is: " + response.statusCode());
+            return response.getBody().asString();
+        } else {
+
+            System.out.println("The response for the DELETE request is: " + response.getBody().asString() + " \n and the status code is: " + response.statusCode());
+        }
+        return null;
+    }
+
+    /**
      * Retrieves booking details and parses the response into a BookingDetailsResponse object.
      *
      * @param bookingId The unique identifier for the booking to retrieve.
@@ -111,5 +153,6 @@ public class BookingService {
             return null;
         }
     }
+
 }
 

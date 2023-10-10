@@ -16,11 +16,11 @@ public class APIEndpoints {
     }
     public static String UpdateBookingEndPoint(int userId)
     {
-        return BOOKING_BASE_URI+"booking";
+        return BOOKING_BASE_URI+"booking/"+userId;
     }
     public static String DeleteBookingEndPoint(int userId)
     {
-        return BOOKING_BASE_URI+"booking";
+        return BOOKING_BASE_URI+"booking/"+userId;
     }
 
 
