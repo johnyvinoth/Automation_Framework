@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="API_Framework_Test_Suite">
+    <test name="API_Tests">
+        <groups>
+            <run>
+                <include name="api_booking" />
+            </run>
+        </groups>
+        <classes>
+            <class name="com.api.tests.ApiTestCases" />
+            <!-- Add more test classes as needed -->
+        </classes>
+    </test>
+
+    <!-- You can add more <test> sections for different test configurations -->
+</suite>

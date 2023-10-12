@@ -1,4 +1,4 @@
-package tests;
+package com.api.tests;
 
 import api.APITestBase;
 import io.restassured.response.Response;
@@ -18,7 +18,7 @@ import java.util.Random;
 import static services.BookingService.*;
 import static utils.JsonUtils.getNestedValueFromJson;
 
-public class apiTestCases extends APITestBase {
+public class ApiTestCases extends APITestBase {
     private static String authToken;
     public static int bookingid;
 
@@ -89,7 +89,7 @@ public class apiTestCases extends APITestBase {
         return response.getBody().asString();
     }
 
-    @Test(enabled = true)
+    @Test(enabled = true,groups = "api_booking")
     public static void TestNoPOJO() {
         String jsonResponse = getRandomBookingDetailsResponse();
         Map<String, Object> dataMap = deserializeJsonResponse(jsonResponse);
@@ -103,7 +103,7 @@ public class apiTestCases extends APITestBase {
 
     }
 
-    @Test(enabled = true)
+    @Test(enabled = true,groups = "api_booking")
     public void TestCreateBooking() {
         Map<String, Object> model = new HashMap<>();
 
@@ -157,7 +157,7 @@ public class apiTestCases extends APITestBase {
     }
 
 
-    @Test(enabled = true, dependsOnMethods = "TestCreateBooking")
+    @Test(enabled = true, dependsOnMethods = "TestCreateBooking",groups = "api_booking")
     public static void TestGetBookingDetails() {
 
 //        GetBookingDetails(bookingid);
@@ -190,7 +190,7 @@ public class apiTestCases extends APITestBase {
 
     }
 
-    @Test(enabled = true)
+    @Test(enabled = true,groups = "api_booking")
     public static void TestGetNestedValueFromJSON() {
         String filePath = "src/main/java/models/createBookingResp.json";
         String jsonResponse = JsonUtils.readJsonFromFile(filePath);
@@ -202,7 +202,7 @@ public class apiTestCases extends APITestBase {
 
     }
 
-    @Test(enabled = true,priority = 1, dependsOnMethods = "TestCreateBooking")
+    @Test(enabled = true,priority = 1, dependsOnMethods = "TestCreateBooking",groups = "api_booking")
     public static void TestUpdateBooking() {
         try {
 
@@ -241,7 +241,7 @@ public class apiTestCases extends APITestBase {
         }
     }
 
-    @Test(enabled = true,priority = 2, dependsOnMethods = "TestCreateBooking")
+    @Test(enabled = true,priority = 2, dependsOnMethods = "TestCreateBooking",groups = "api_booking")
     public static void TestDelete() {
 
         String jsonResponse = BookingService.DELETEBooking(bookingid);
