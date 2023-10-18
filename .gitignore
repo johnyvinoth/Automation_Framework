@@ -37,4 +37,4 @@ build/
 ### Mac OS ###
 .DS_Store
 *.xml
-Web_UI_Selenium_Framework/allure-results/*
+*/allure-results/*.json
