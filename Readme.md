@@ -47,5 +47,10 @@ cd Mobile_Framework
 mvn clean test
 
 ```
+### To Genreate the Allure report
 
+cd into the module after running the test cases through mvn clean install command from the project directory or from the module.
 
+```
+allure serve
+```
