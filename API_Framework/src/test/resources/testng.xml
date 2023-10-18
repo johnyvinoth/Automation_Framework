@@ -7,7 +7,7 @@
             </run>
         </groups>
         <classes>
-            <class name="com.api.tests.ApiTestCases" />
+            <class name="com.api.tests.apiTestCases" />
             <!-- Add more test classes as needed -->
         </classes>
     </test>

@@ -12,6 +12,7 @@
         <module>API_Framework</module>
         <module>Web_UI_Selenium_Framework</module>
         <module>Mobile_Framework</module>
+
     </modules>
 
     <properties>
@@ -19,5 +20,87 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    <build>
+        <pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.1.2</version> <!-- Use the version you need -->
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.12.0</version>
+                <configuration>
+                    <reportVersion>2.13.8</reportVersion>
+<!--                    <resultsDirectory>${project.build.directory}/Reports/allure-results</resultsDirectory>-->
+
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>allure-report</id>
+<!--                        <phase>post-integration-test</phase>-->
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+            </plugin>
+
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-clean-plugin</artifactId>-->
+<!--                <version>3.1.0</version>-->
+<!--                <configuration>-->
+<!--                    <filesets>-->
+<!--                        <fileset>-->
+<!--                            <directory>API_Framework/target</directory>-->
+<!--                            <includes>-->
+<!--                                <include>allure-results</include>-->
+<!--                            </includes>-->
+<!--                            <followSymlinks>false</followSymlinks>-->
+<!--                        </fileset>-->
+<!--                    </filesets>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+        </plugins>
+
+        </pluginManagement>
+    </build>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-maven</artifactId>
+            <version>2.12.0</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.qameta.allure/allure-rest-assured -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-rest-assured</artifactId>
+            <version>2.24.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>2.13.8</version> <!-- Use the version you need -->
+        </dependency>
+    </dependencies>
+
+<!--    allure.results.directory=Automation_Framework//Reports/allure-results-->
 
 </project>
