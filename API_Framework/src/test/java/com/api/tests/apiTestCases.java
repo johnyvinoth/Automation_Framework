@@ -1,6 +1,7 @@
 package com.api.tests;
 
 import api.APITestBase;
+import io.qameta.allure.*;
 import io.restassured.response.Response;
 import models.BookingDetailsResponse;
 import org.testng.Assert;
@@ -9,6 +10,8 @@ import services.BookingService;
 import utils.DeserializationUtils;
 import utils.JsonUtils;
 import utils.exceptions.NotFoundException;
+//import io.qameta.allure.*;
+
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +21,7 @@ import java.util.Random;
 import static services.BookingService.*;
 import static utils.JsonUtils.getNestedValueFromJson;
 
-public class ApiTestCases extends APITestBase {
+public class apiTestCases extends APITestBase {
     private static String authToken;
     public static int bookingid;
 
@@ -89,7 +92,9 @@ public class ApiTestCases extends APITestBase {
         return response.getBody().asString();
     }
 
-    @Test(enabled = true,groups = "api_booking")
+    @Test(enabled = false, groups = "api_booking")
+//    @Description("This is a sample test description.")
+//    @Description("Test")
     public static void TestNoPOJO() {
         String jsonResponse = getRandomBookingDetailsResponse();
         Map<String, Object> dataMap = deserializeJsonResponse(jsonResponse);
@@ -103,7 +108,18 @@ public class ApiTestCases extends APITestBase {
 
     }
 
-    @Test(enabled = true,groups = "api_booking")
+    @Test(enabled = true, groups = "api_booking")
+    @Step("Test Step")
+    @Description("Test Description")
+    public static void DummyTest() {
+        System.out.println("Dummy Test pass");
+
+        Assert.assertTrue(true);
+    }
+
+    @Test(enabled = false, groups = "api_booking")
+    @Step("Test Step")
+    @Description("Test Description")
     public void TestCreateBooking() {
         Map<String, Object> model = new HashMap<>();
 
@@ -157,7 +173,8 @@ public class ApiTestCases extends APITestBase {
     }
 
 
-    @Test(enabled = true, dependsOnMethods = "TestCreateBooking",groups = "api_booking")
+    @Test(enabled = false, dependsOnMethods = "TestCreateBooking", groups = "api_booking")
+//    @Description("test")
     public static void TestGetBookingDetails() {
 
 //        GetBookingDetails(bookingid);
@@ -190,7 +207,7 @@ public class ApiTestCases extends APITestBase {
 
     }
 
-    @Test(enabled = true,groups = "api_booking")
+    @Test(enabled = false, groups = "api_booking")
     public static void TestGetNestedValueFromJSON() {
         String filePath = "src/main/java/models/createBookingResp.json";
         String jsonResponse = JsonUtils.readJsonFromFile(filePath);
@@ -202,7 +219,7 @@ public class ApiTestCases extends APITestBase {
 
     }
 
-    @Test(enabled = true,priority = 1, dependsOnMethods = "TestCreateBooking",groups = "api_booking")
+    @Test(enabled = false, priority = 1, dependsOnMethods = "TestCreateBooking", groups = "api_booking")
     public static void TestUpdateBooking() {
         try {
 
@@ -241,13 +258,15 @@ public class ApiTestCases extends APITestBase {
         }
     }
 
-    @Test(enabled = true,priority = 2, dependsOnMethods = "TestCreateBooking",groups = "api_booking")
+    @Test(enabled = false, priority = 2, dependsOnMethods = "TestCreateBooking", groups = "api_booking")
     public static void TestDelete() {
 
         String jsonResponse = BookingService.DELETEBooking(bookingid);
         String prettyPrintJson = JsonUtils.prettyPrintJson(jsonResponse);
-        System.out.println("The response for the delete request is: "+prettyPrintJson);
+        System.out.println("The response for the delete request is: " + prettyPrintJson);
 
     }
+
+    // TODO : Need to add profiles in the POM.XML to load different details based on the profile. Going to have one profile for Booking API and one for Users API.
 //
 }
