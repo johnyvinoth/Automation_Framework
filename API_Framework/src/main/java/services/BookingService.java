@@ -1,5 +1,6 @@
 package services;
 
+import api.APITestBase;
 import endpoints.APIEndpoints;
 import io.restassured.response.Response;
 import models.BookingDetailsResponse;
@@ -12,7 +13,7 @@ import java.util.Random;
 import static endpoints.APIEndpoints.GetBookingBaseURL;
 
 
-public class BookingService {
+public class BookingService extends APITestBase {
 
     /**
      * Retrieves the available booking ids.
@@ -54,13 +55,20 @@ public class BookingService {
             System.out.println("Random bookingId is used is :" + selectedBookingId);
 
             Response response = BookingService.getBookingDetails(selectedBookingId);
-
-            jsonResponse = response.getBody().asString();
-            System.out.println("The status code is: " + response.getStatusCode());
+            if (response.getStatusCode() == 200 || response.getStatusCode() == 201) {
+                jsonResponse = response.getBody().asString();
+                System.out.println("The status code is: " + response.getStatusCode());
+                logger.info("Get Booking details Get request is success");
+                return jsonResponse;
+            } else {
+                logger.info("Get Booking details Get request is fail");
+            return null;
+            }
 
 //            System.out.println(jsonResponse);
 
         }
+
         return jsonResponse;
     }
 
@@ -79,7 +87,13 @@ public class BookingService {
         }
         String serializedJson = SerializationUtils.serializeToJson(jsonStructure);
         Response response = APIUtils.post(APIEndpoints.CreateBookingEndPoint(), serializedJson);
-        return response.getBody().asString();
+        if (response.getStatusCode() == 200) {
+            logger.info("Create Booking post request is success");
+            return response.getBody().asString();
+        } else {
+            logger.info("Create Booking post request is fail");
+        }
+        return null;
     }
 
     /**
@@ -100,10 +114,12 @@ public class BookingService {
         if (response.getStatusCode() == 200) {
 
             System.out.println("The Status code for update request is: " + response.statusCode());
+            logger.info("Update Booking put request is success");
             return response.getBody().asString();
         } else {
 
             System.out.println("The response for the put request is: " + response.getBody().asString() + " \n and the status code is: " + response.statusCode());
+            logger.info("Update Booking put request is fail");
         }
         return null;
     }
@@ -116,13 +132,15 @@ public class BookingService {
      */
     public static String DELETEBooking(int bookingId) {
         Response response = APIUtils.delete(APIEndpoints.DeleteBookingEndPoint(bookingId));
-        if (response.getStatusCode() == 200 || response.getStatusCode()==201) {
+        if (response.getStatusCode() == 200 || response.getStatusCode() == 201) {
 
             System.out.println("The Status code for update request is: " + response.statusCode());
+            logger.info("Delete Booking request is success");
             return response.getBody().asString();
         } else {
 
             System.out.println("The response for the DELETE request is: " + response.getBody().asString() + " \n and the status code is: " + response.statusCode());
+            logger.info("Delete Booking request is fail");
         }
         return null;
     }
@@ -147,9 +165,11 @@ public class BookingService {
         System.out.println(responseObject.getBookingdates());
 
         if (response.getStatusCode() == 200) {
+            logger.info("Get Booking get request is success");
             return DeserializationUtils.deserializeFromJson(response.getBody().asString(), BookingDetailsResponse.class);
         } else {
             // Handle error or return null as needed
+            logger.info("Get Booking get request is fail");
             return null;
         }
     }

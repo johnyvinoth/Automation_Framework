@@ -21,6 +21,7 @@ public class APIEndpoints {
     public static String DeleteBookingEndPoint(int userId)
     {
         return BOOKING_BASE_URI+"booking/"+userId;
+
     }
 
 
