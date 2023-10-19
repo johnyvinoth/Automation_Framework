@@ -92,7 +92,7 @@ public class apiTestCases extends APITestBase {
         return response.getBody().asString();
     }
 
-    @Test(enabled = false, groups = "api_booking")
+    @Test(enabled = true, groups = "api_booking")
 //    @Description("This is a sample test description.")
 //    @Description("Test")
     public static void TestNoPOJO() {
@@ -115,9 +115,12 @@ public class apiTestCases extends APITestBase {
         System.out.println("Dummy Test pass");
 
         Assert.assertTrue(true);
+        logger.debug("Debug Message");
+        logger.info("Info Message");
+        logger.error("Error message");
     }
 
-    @Test(enabled = false, groups = "api_booking")
+    @Test(enabled = true, groups = "api_booking")
     @Step("Test Step")
     @Description("Test Description")
     public void TestCreateBooking() {
@@ -173,7 +176,7 @@ public class apiTestCases extends APITestBase {
     }
 
 
-    @Test(enabled = false, dependsOnMethods = "TestCreateBooking", groups = "api_booking")
+    @Test(enabled = true, dependsOnMethods = "TestCreateBooking", groups = "api_booking")
 //    @Description("test")
     public static void TestGetBookingDetails() {
 
@@ -207,7 +210,7 @@ public class apiTestCases extends APITestBase {
 
     }
 
-    @Test(enabled = false, groups = "api_booking")
+    @Test(enabled = true, groups = "api_booking")
     public static void TestGetNestedValueFromJSON() {
         String filePath = "src/main/java/models/createBookingResp.json";
         String jsonResponse = JsonUtils.readJsonFromFile(filePath);
@@ -219,7 +222,7 @@ public class apiTestCases extends APITestBase {
 
     }
 
-    @Test(enabled = false, priority = 1, dependsOnMethods = "TestCreateBooking", groups = "api_booking")
+    @Test(enabled = true, priority = 1, dependsOnMethods = "TestCreateBooking", groups = "api_booking")
     public static void TestUpdateBooking() {
         try {
 
@@ -258,7 +261,7 @@ public class apiTestCases extends APITestBase {
         }
     }
 
-    @Test(enabled = false, priority = 2, dependsOnMethods = "TestCreateBooking", groups = "api_booking")
+    @Test(enabled = true, priority = 2, dependsOnMethods = "TestCreateBooking", groups = "api_booking")
     public static void TestDelete() {
 
         String jsonResponse = BookingService.DELETEBooking(bookingid);
