@@ -93,7 +93,7 @@ public class apiTestCases extends APITestBase {
     }
 
     @Test(enabled = true, groups = "api_booking")
-//    @Description("This is a sample test description.")
+    @Description("Test No POJO functions")
 //    @Description("Test")
     public static void TestNoPOJO() {
         String jsonResponse = getRandomBookingDetailsResponse();
@@ -110,7 +110,7 @@ public class apiTestCases extends APITestBase {
 
     @Test(enabled = true, groups = "api_booking")
     @Step("Test Step")
-    @Description("Test Description")
+    @Description("Dummy Test")
     public static void DummyTest() {
         System.out.println("Dummy Test pass");
 
@@ -122,7 +122,7 @@ public class apiTestCases extends APITestBase {
 
     @Test(enabled = true, groups = "api_booking")
     @Step("Test Step")
-    @Description("Test Description")
+    @Description("Create Booking")
     public void TestCreateBooking() {
         Map<String, Object> model = new HashMap<>();
 
@@ -211,6 +211,7 @@ public class apiTestCases extends APITestBase {
     }
 
     @Test(enabled = true, groups = "api_booking")
+    @Description("Get Nested Values from JSON")
     public static void TestGetNestedValueFromJSON() {
         String filePath = "src/main/java/models/createBookingResp.json";
         String jsonResponse = JsonUtils.readJsonFromFile(filePath);
@@ -223,6 +224,7 @@ public class apiTestCases extends APITestBase {
     }
 
     @Test(enabled = true, priority = 1, dependsOnMethods = "TestCreateBooking", groups = "api_booking")
+    @Description("Update Booking")
     public static void TestUpdateBooking() {
         try {
 
@@ -262,6 +264,7 @@ public class apiTestCases extends APITestBase {
     }
 
     @Test(enabled = true, priority = 2, dependsOnMethods = "TestCreateBooking", groups = "api_booking")
+    @Description("Delete Booking")
     public static void TestDelete() {
 
         String jsonResponse = BookingService.DELETEBooking(bookingid);

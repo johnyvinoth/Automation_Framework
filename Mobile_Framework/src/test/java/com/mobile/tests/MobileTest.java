@@ -3,7 +3,7 @@ package com.mobile.tests;
 import org.automation.MobileTestBase;
 import org.testng.annotations.Test;
 
-public class mobileTest extends MobileTestBase {
+public class MobileTest extends MobileTestBase {
 
     @Test
     public static void dummyMobileTest()
