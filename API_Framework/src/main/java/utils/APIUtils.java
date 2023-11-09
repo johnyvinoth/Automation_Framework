@@ -15,7 +15,10 @@ public class APIUtils {
 
     static {
         RestAssured.baseURI = BASE_URL;
+//        Commenting out dynamic authtoken generator as there is some problem with that API.
         String authToken = AuthTokenProvider.getAuthToken();
+        //Getting hardcoded AuthString for time being as dynamic token generation API is not working as expected.
+//        String authToken = AuthTokenProvider.getHardCodeAuthToken();
 //        System.out.println("AuthToken: "+authToken);
         requestSpec = RestAssured.given()
                 .cookie("token", authToken) // Set your authentication token here
