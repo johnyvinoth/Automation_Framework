@@ -5,6 +5,7 @@ import com.codeborne.selenide.appium.SelenideAppium;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.ios.IOSDriver;
 import org.automation.MobileTestBase;
+import org.openqa.selenium.By;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.providers.SauceLabsAndroidProvider;
 import org.providers.SauceLabsiOSProvider;
@@ -15,6 +16,7 @@ import org.testng.annotations.Test;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.appium.SelenideAppium.$;
 
 public class iOSMobileTest extends MobileTestBase {
@@ -31,7 +33,7 @@ public class iOSMobileTest extends MobileTestBase {
     public static void dummyMobileTest() {
         logger.info("Dummy iOS Mobile Test success");
         System.out.println("Dummy iOS Mobile Test success");
-        $(AppiumBy.accessibilityId("open menu")).click();
+        $$(By.name("store item text")).get(0).click();
     }
 
 
