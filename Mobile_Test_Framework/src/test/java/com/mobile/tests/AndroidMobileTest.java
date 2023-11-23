@@ -1,23 +1,15 @@
 package com.mobile.tests;
 
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.appium.ScreenObject;
 import com.codeborne.selenide.appium.SelenideAppium;
 import io.appium.java_client.AppiumBy;
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.options.UiAutomator2Options;
-import io.appium.java_client.remote.AutomationName;
-import io.appium.java_client.remote.MobileCapabilityType;
-import org.automation.MobileTestBase;
-import org.openqa.selenium.remote.DesiredCapabilities;
+import org.automation.base.MobileTestBase;
+import org.automation.pages.HomeScreen;
 import org.providers.SauceLabsAndroidProvider;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import utils.ConfigurationUtils;
-
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import static com.codeborne.selenide.appium.SelenideAppium.$;
 
@@ -42,12 +34,21 @@ public class AndroidMobileTest extends MobileTestBase {
 
     }
 
-    @Test
+    @Test(groups = "android",enabled = false)
     public static void dummyMobileTest() {
         logger.info("Dummy Android Mobile Test success");
         System.out.println("Dummy Android Mobile Test success");
 //        driver.findElement(AppiumBy.accessibilityId("open menu")).click();
-        $(AppiumBy.accessibilityId("open menu")).click();
+//        $(AppiumBy.accessibilityId("open menu")).click();
+        HomeScreen homeScreen=new HomeScreen();
+        homeScreen.clickProduct();
+    }
+
+    @Test(groups = "android",enabled = true)
+    public static void testCopyrightTextIsPresent()
+    {
+        HomeScreen homeScreen= ScreenObject.screen(HomeScreen.class);
+        homeScreen.checkWhetherCopyrightTextIsPresent();
     }
 
     @AfterClass(groups = "android")

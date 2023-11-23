@@ -1,4 +1,4 @@
-package org.automation;
+package org.automation.base;
 
 import io.appium.java_client.AppiumDriver;
 
