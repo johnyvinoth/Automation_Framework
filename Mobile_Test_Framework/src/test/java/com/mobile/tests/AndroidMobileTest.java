@@ -6,8 +6,11 @@ import com.codeborne.selenide.appium.SelenideAppium;
 import io.appium.java_client.AppiumBy;
 import org.automation.base.MobileTestBase;
 import org.automation.pages.HomeScreen;
+import org.managers.AppiumServerManager;
 import org.providers.SauceLabsAndroidProvider;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -26,7 +29,8 @@ public class AndroidMobileTest extends MobileTestBase {
 //        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME,ANDROID_DEVICE_NAME);
 //        capabilities.setCapability("app",ANDROID_APP_PATH);
 
-
+        //Start Appium Server
+        AppiumServerManager.startAppiumServer();
         //Initialize the Appium driver.
         Configuration.browser= SauceLabsAndroidProvider.class.getName();
         SelenideAppium.launchApp();
@@ -48,7 +52,8 @@ public class AndroidMobileTest extends MobileTestBase {
     public static void testCopyrightTextIsPresent()
     {
         HomeScreen homeScreen= ScreenObject.screen(HomeScreen.class);
-        homeScreen.checkWhetherCopyrightTextIsPresent();
+        Assert.assertTrue(homeScreen.checkWhetherCopyrightTextIsPresent(),"The Copyright text is not present and/or not displays the expected message");
+        System.out.println("The Copyright text is not present and/or not displays the expected message");
     }
 
     @AfterClass(groups = "android")
@@ -56,5 +61,10 @@ public class AndroidMobileTest extends MobileTestBase {
     {
         System.out.println("Dummy Android Mobile Test Exited");
 //        driver.quit();
+    }
+    @AfterSuite
+    public void closeAppium()
+    {
+        AppiumServerManager.stopAppiumServer();
     }
 }

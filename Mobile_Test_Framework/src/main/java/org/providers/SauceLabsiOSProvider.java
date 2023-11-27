@@ -6,6 +6,7 @@ import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.options.XCUITestOptions;
 import io.appium.java_client.remote.AutomationName;
+import org.managers.AppiumServerManager;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import utils.ConfigurationUtils;
@@ -27,6 +28,7 @@ public class SauceLabsiOSProvider implements WebDriverProvider {
         options.setDeviceName(IOS_DEVICE_NAME);
         options.setApp(IOS_APP_PATH);
         try {
+            URL appiumServerUrl= AppiumServerManager.getAppiumServerURL();
             return new IOSDriver(new URL(APPIUM_URL),options);
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);

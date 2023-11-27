@@ -2,12 +2,10 @@ package org.automation.pages;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.appium.AppiumCondition;
 import com.codeborne.selenide.appium.AppiumSelectors;
 import com.codeborne.selenide.appium.conditions.CombinedAttribute;
 import com.codeborne.selenide.appium.selector.CombinedBy;
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.By;
@@ -22,7 +20,7 @@ public class HomeScreen {
 
     //identifying an element individually for Android and iOS is not used. Using CombinedBy below.
     @AndroidFindBy(xpath = "//android.widget.TextView[@text='© 2023 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy.']")
-    @iOSXCUITFindBy(xpath="//XCUIElementTypeStaticText[@name=\"© 2023 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy.\"]")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@name=\"© 2023 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy.\"]")
     private WebElement copyrightText;
     private CombinedBy copyRightCombined = CombinedBy
             .android(By.xpath("//android.widget.TextView[@text='© 2023 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy.']"))
@@ -38,14 +36,22 @@ public class HomeScreen {
         return screen(ProductDescriptionScreen.class);
     }
 
-    public void checkWhetherCopyrightTextIsPresent() {
+    public Boolean checkWhetherCopyrightTextIsPresent() {
 
-        CombinedAttribute attribute=CombinedAttribute.android("text").ios("name");
+        CombinedAttribute attribute = CombinedAttribute.android("text").ios("name");
 
-        $(copyRightCombined)
-                .scrollTo()
-                .shouldBe(Condition.visible,Condition.interactable)
-                .shouldHave(AppiumCondition.attribute(attribute,"© 2023 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy."));
+        try {
+
+            $(copyRightCombined)
+                    .scrollTo()
+                    .shouldBe(Condition.visible, Condition.interactable)
+                    .shouldHave(AppiumCondition.attribute(attribute, "© 2023 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy."));
+            return true;
+        } catch (Throwable e) {
+
+            return false;
+        }
+
 
     }
 

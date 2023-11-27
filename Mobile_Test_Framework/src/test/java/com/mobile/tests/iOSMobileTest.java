@@ -4,8 +4,11 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.appium.SelenideAppium;
 import org.automation.base.MobileTestBase;
 import org.automation.pages.HomeScreen;
+import org.managers.AppiumServerManager;
 import org.openqa.selenium.By;
 import org.providers.SauceLabsiOSProvider;
+import org.testng.Assert;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -17,6 +20,11 @@ import static com.codeborne.selenide.appium.SelenideAppium.$;
 public class iOSMobileTest extends MobileTestBase {
     @BeforeClass(groups = "ios")
     public static void SetupiOS() throws MalformedURLException {
+
+        //Start Appium Server
+        AppiumServerManager.startAppiumServer();
+
+          //Initialize the Appium driver.
         Configuration.browser= SauceLabsiOSProvider.class.getName();
         SelenideAppium.launchApp();
 
@@ -36,7 +44,11 @@ public class iOSMobileTest extends MobileTestBase {
     public static void testCopyrightTextIsPresent()
     {
         HomeScreen homeScreen=new HomeScreen();
-        homeScreen.checkWhetherCopyrightTextIsPresent();
+        Assert.assertTrue(homeScreen.checkWhetherCopyrightTextIsPresent(),"The Copyright text is not present and/or not displays the expected message");
+        System.out.println("The Copyright text is not present and/or not displays the expected message");
+
+
+
     }
 
 
@@ -45,6 +57,12 @@ public class iOSMobileTest extends MobileTestBase {
 ////    {
 ////        driver.quit();
 ////    }
+
+     @AfterSuite
+    public void closeAppium()
+    {
+        AppiumServerManager.stopAppiumServer();
+    }
 
 
 }

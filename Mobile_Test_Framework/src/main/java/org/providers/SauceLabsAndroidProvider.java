@@ -4,6 +4,7 @@ import com.codeborne.selenide.WebDriverProvider;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.remote.AutomationName;
+import org.managers.AppiumServerManager;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import utils.ConfigurationUtils;
@@ -28,6 +29,7 @@ public class SauceLabsAndroidProvider implements WebDriverProvider {
         options.setDeviceName(ANDROID_DEVICE_NAME);
         options.setApp(ANDROID_APP_PATH);
         try {
+            URL appiumServerUrl= AppiumServerManager.getAppiumServerURL();
             return new AndroidDriver(new URL(APPIUM_URL),options);
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
