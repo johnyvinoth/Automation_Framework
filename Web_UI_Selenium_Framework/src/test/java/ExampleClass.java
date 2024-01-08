@@ -57,7 +57,7 @@ public class ExampleClass {
         }
 
     }
-    //Test push in Github
+    //Test push in Github1
 
     @Test(groups = {"Test", "Test2"})
     public void testMethod2() {
