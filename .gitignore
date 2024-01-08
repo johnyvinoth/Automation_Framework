@@ -39,3 +39,6 @@ build/
 *.xml
 */allure-results/*.json
 *.log
+.idea/encodings.xml
+.idea/misc.xml
+

@@ -11,7 +11,7 @@
     <modules>
         <module>API_Framework</module>
         <module>Web_UI_Selenium_Framework</module>
-        <module>Mobile_Framework</module>
+        <module>Mobile_Test_Framework</module>
 
     </modules>
 
@@ -113,6 +113,12 @@
             <version>2.21.0</version>
         </dependency>
 
+        <!--        <dependency>-->
+        <!--            <groupId>org.testng</groupId>-->
+        <!--            <artifactId>testng</artifactId>-->
+        <!--            <version>7.8.0</version>-->
+        <!--            <scope>compile</scope>-->
+        <!--        </dependency>-->
 
     </dependencies>
 

@@ -27,5 +27,9 @@ public class ConfigurationUtils {
         return properties.getProperty(resourceName);
 
     }
+    public static String getResource(String resourceName)
+    {
+        return properties.getProperty(resourceName);
+    }
 
 }
