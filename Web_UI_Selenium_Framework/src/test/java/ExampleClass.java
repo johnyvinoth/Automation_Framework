@@ -57,6 +57,7 @@ public class ExampleClass {
         }
 
     }
+    //Test push in Github
 
     @Test(groups = {"Test", "Test2"})
     public void testMethod2() {
