@@ -24,29 +24,36 @@ public class iOSMobileTest extends MobileTestBase {
         //Start Appium Server
         AppiumServerManager.startAppiumServer();
 
-          //Initialize the Appium driver.
-        Configuration.browser= SauceLabsiOSProvider.class.getName();
+        //Initialize the Appium driver.
+        Configuration.browser = SauceLabsiOSProvider.class.getName();
         SelenideAppium.launchApp();
 
 //        driver = new IOSDriver(new URL("http://192.168.1.11:4723/"), capabilities);
 
     }
 
-    @Test(groups = "ios",enabled = false)
+    @Test(groups = "ios", enabled = false)
     public static void dummyMobileTest() {
         logger.info("Dummy iOS Mobile Test success");
         System.out.println("Dummy iOS Mobile Test success");
 //        $$(By.name("store item text")).get(0).click();
-        HomeScreen homeScreen=new HomeScreen();
+        HomeScreen homeScreen = new HomeScreen();
         homeScreen.clickProduct();
     }
-      @Test(groups = "ios",enabled = true)
-    public static void testCopyrightTextIsPresent()
-    {
-        HomeScreen homeScreen=new HomeScreen();
-        Assert.assertTrue(homeScreen.checkWhetherCopyrightTextIsPresent(),"The Copyright text is not present and/or not displays the expected message");
-        System.out.println("The Copyright text is not present and/or not displays the expected message");
 
+    @Test(groups = "ios", enabled = true)
+    public static void testCopyrightTextIsPresent() {
+        HomeScreen homeScreen = new HomeScreen();
+        Boolean copyrightTextPresent = homeScreen.checkWhetherCopyrightTextIsPresent();
+//        Assert.assertTrue(homeScreen.checkWhetherCopyrightTextIsPresent(),"The Copyright text is not present and/or not displays the expected message");
+        if (copyrightTextPresent)
+        {
+            System.out.println("The Copyright text is present and displays the expected message");
+        }
+        else {
+            System.out.println("The Copyright text is not present and/or not displays the expected message");
+        }
+        Assert.assertTrue(copyrightTextPresent);
 
 
     }
@@ -58,9 +65,8 @@ public class iOSMobileTest extends MobileTestBase {
 ////        driver.quit();
 ////    }
 
-     @AfterSuite
-    public void closeAppium()
-    {
+    @AfterSuite
+    public void closeAppium() {
         AppiumServerManager.stopAppiumServer();
     }
 
