@@ -52,8 +52,16 @@ public class AndroidMobileTest extends MobileTestBase {
     public static void testCopyrightTextIsPresent()
     {
         HomeScreen homeScreen= ScreenObject.screen(HomeScreen.class);
-        Assert.assertTrue(homeScreen.checkWhetherCopyrightTextIsPresent(),"The Copyright text is not present and/or not displays the expected message");
-        System.out.println("The Copyright text is not present and/or not displays the expected message");
+        Boolean copyrightTextPresent = homeScreen.checkWhetherCopyrightTextIsPresent();
+//        Assert.assertTrue(homeScreen.checkWhetherCopyrightTextIsPresent(),"The Copyright text is not present and/or not displays the expected message");
+        if (copyrightTextPresent)
+        {
+            System.out.println("The Copyright text is present and displays the expected message");
+        }
+        else {
+            System.out.println("The Copyright text is not present and/or not displays the expected message");
+        }
+        Assert.assertTrue(copyrightTextPresent);
     }
 
     @AfterClass(groups = "android")

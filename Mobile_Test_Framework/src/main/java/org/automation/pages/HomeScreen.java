@@ -19,13 +19,14 @@ public class HomeScreen {
     By iOsSauceLabBag = AppiumSelectors.withAttribute("name", "store item");
 
     //identifying an element individually for Android and iOS is not used. Using CombinedBy below.
-    @AndroidFindBy(xpath = "//android.widget.TextView[@text='© 2023 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy.']")
-    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@name=\"© 2023 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy.\"]")
+//    @AndroidFindBy(xpath = "//android.widget.TextView[@text='© 2023 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy.']")
+//    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@name=\"© 2023 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy.\"]")
     private WebElement copyrightText;
     private CombinedBy copyRightCombined = CombinedBy
-            .android(By.xpath("//android.widget.TextView[@text='© 2023 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy.']"))
-            .ios(By.xpath("//XCUIElementTypeStaticText[@name=\"© 2023 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy.\"]"));
-
+            .android(By.xpath("//android.widget.TextView[@text='© 2024 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy.']"))
+            .ios(By.xpath("//XCUIElementTypeStaticText[@name='© 2024 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy.']"));
+//XCUIElementTypeStaticText[@name="© 2024 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy."]
+    //android.widget.TextView[@text="© 2024 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy."]
     public ProductDescriptionScreen clickProduct() {
         CombinedBy SauceLabBag = CombinedBy.android(AndroidSauceLabBag).ios(iOsSauceLabBag);
 
@@ -45,7 +46,7 @@ public class HomeScreen {
             $(copyRightCombined)
                     .scrollTo()
                     .shouldBe(Condition.visible, Condition.interactable)
-                    .shouldHave(AppiumCondition.attribute(attribute, "© 2023 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy."));
+                    .shouldHave(AppiumCondition.attribute(attribute, "© 2024 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy."));
             return true;
         } catch (Throwable e) {
 
