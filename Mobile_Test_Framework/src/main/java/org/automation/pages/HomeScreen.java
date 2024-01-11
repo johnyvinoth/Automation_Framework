@@ -22,6 +22,8 @@ public class HomeScreen {
 //    @AndroidFindBy(xpath = "//android.widget.TextView[@text='© 2023 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy.']")
 //    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@name=\"© 2023 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy.\"]")
     private WebElement copyrightText;
+
+//TODO: Need to add shoping cart element identifiers and methods to work with it.
     private CombinedBy copyRightCombined = CombinedBy
             .android(By.xpath("//android.widget.TextView[@text='© 2024 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy.']"))
             .ios(By.xpath("//XCUIElementTypeStaticText[@name='© 2024 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy.']"));

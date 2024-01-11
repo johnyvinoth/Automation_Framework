@@ -6,6 +6,7 @@ import com.codeborne.selenide.appium.SelenideAppium;
 import io.appium.java_client.AppiumBy;
 import org.automation.base.MobileTestBase;
 import org.automation.pages.HomeScreen;
+import org.automation.pages.ProductDescriptionScreen;
 import org.managers.AppiumServerManager;
 import org.providers.SauceLabsAndroidProvider;
 import org.testng.Assert;
@@ -45,7 +46,8 @@ public class AndroidMobileTest extends MobileTestBase {
 //        driver.findElement(AppiumBy.accessibilityId("open menu")).click();
 //        $(AppiumBy.accessibilityId("open menu")).click();
         HomeScreen homeScreen=new HomeScreen();
-        homeScreen.clickProduct();
+//        homeScreen.clickProduct();
+        ProductDescriptionScreen productDescriptionScreen= homeScreen.clickProduct();
     }
 
     @Test(groups = "android",enabled = true)
