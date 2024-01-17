@@ -4,6 +4,8 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.appium.SelenideAppium;
 import org.automation.base.MobileTestBase;
 import org.automation.pages.HomeScreen;
+import org.automation.pages.ProductDescriptionScreen;
+import org.automation.pages.ShoppingCartScreen;
 import org.managers.AppiumServerManager;
 import org.openqa.selenium.By;
 import org.providers.SauceLabsiOSProvider;
@@ -15,6 +17,7 @@ import org.testng.annotations.Test;
 import java.net.MalformedURLException;
 
 import static com.codeborne.selenide.Selenide.$$;
+import static com.codeborne.selenide.Selenide.sleep;
 import static com.codeborne.selenide.appium.SelenideAppium.$;
 
 public class iOSMobileTest extends MobileTestBase {
@@ -41,20 +44,35 @@ public class iOSMobileTest extends MobileTestBase {
         homeScreen.clickProduct();
     }
 
-    @Test(groups = "ios", enabled = true)
+    @Test(groups = "ios", enabled = false)
     public static void testCopyrightTextIsPresent() {
         HomeScreen homeScreen = new HomeScreen();
         Boolean copyrightTextPresent = homeScreen.checkWhetherCopyrightTextIsPresent();
 //        Assert.assertTrue(homeScreen.checkWhetherCopyrightTextIsPresent(),"The Copyright text is not present and/or not displays the expected message");
-        if (copyrightTextPresent)
-        {
+        if (copyrightTextPresent) {
             System.out.println("The Copyright text is present and displays the expected message");
-        }
-        else {
+        } else {
             System.out.println("The Copyright text is not present and/or not displays the expected message");
         }
         Assert.assertTrue(copyrightTextPresent);
 
+
+    }
+
+    @Test(groups = "ios", enabled = true)
+    public static void addSauceLabBagToCartTest() {
+//        logger.info("Dummy iOS Mobile Test success");
+//        System.out.println("Dummy iOS Mobile Test success");
+//        $$(By.name("store item text")).get(0).click();
+        HomeScreen homeScreen = new HomeScreen();
+        ProductDescriptionScreen productDescriptionScreen = homeScreen.clickProduct();
+        Assert.assertTrue(productDescriptionScreen.checkProductName("Sauce Labs Backpack"), "The product name doesn't matches");
+        Assert.assertTrue(productDescriptionScreen.checkProductPrice("$29.99"), "The product price doesn't matches");
+        productDescriptionScreen.clickAddToCartBtn();
+        ShoppingCartScreen shoppingCartScreen = productDescriptionScreen.clickShoppingCartBtn();
+
+        sleep(5000);
+//        productDescriptionScreen.clickShoppingCartBtn();
 
     }
 
