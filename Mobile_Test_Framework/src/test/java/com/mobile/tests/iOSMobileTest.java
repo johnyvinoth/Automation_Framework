@@ -61,18 +61,17 @@ public class iOSMobileTest extends MobileTestBase {
 
     @Test(groups = "ios", enabled = true)
     public static void addSauceLabBagToCartTest() {
-//        logger.info("Dummy iOS Mobile Test success");
-//        System.out.println("Dummy iOS Mobile Test success");
-//        $$(By.name("store item text")).get(0).click();
         HomeScreen homeScreen = new HomeScreen();
         ProductDescriptionScreen productDescriptionScreen = homeScreen.clickProduct();
-        Assert.assertTrue(productDescriptionScreen.checkProductName("Sauce Labs Backpack"), "The product name doesn't matches");
-        Assert.assertTrue(productDescriptionScreen.checkProductPrice("$29.99"), "The product price doesn't matches");
+        Assert.assertTrue(productDescriptionScreen.checkProductName("Sauce Labs Backpack"), "The product name doesn't match");
+        Assert.assertTrue(productDescriptionScreen.checkProductPrice("$29.99"), "The product price doesn't match");
+        Assert.assertTrue(productDescriptionScreen.checkSauceLabBagDescription(), "The product product description doesn't match");
         productDescriptionScreen.clickAddToCartBtn();
         ShoppingCartScreen shoppingCartScreen = productDescriptionScreen.clickShoppingCartBtn();
+        Assert.assertTrue(shoppingCartScreen.checkProductaddedToCart());
 
         sleep(5000);
-//        productDescriptionScreen.clickShoppingCartBtn();
+
 
     }
 

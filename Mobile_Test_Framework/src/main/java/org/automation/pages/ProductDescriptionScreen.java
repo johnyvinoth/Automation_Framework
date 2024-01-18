@@ -26,7 +26,7 @@ public class ProductDescriptionScreen {
 
     private CombinedBy txtProductDescription = CombinedBy
             .android(By.xpath("//android.widget.TextView[@content-desc='product description']"))
-            .ios((By.xpath("(//XCUIElementTypeOther[@name='Horizontal scroll bar, 1 page'])[2]")));
+            .ios(By.xpath("//XCUIElementTypeStaticText[@name='product description']"));
 
     private CombinedBy btnCart = CombinedBy
             .android(By.xpath("//android.view.ViewGroup[@content-desc='cart badge']/android.widget.ImageView"))
@@ -59,6 +59,7 @@ public class ProductDescriptionScreen {
                     .scrollTo()
                     .shouldBe(Condition.visible, Condition.interactable)
                     .shouldHave(AppiumCondition.attribute(productNameAttribute, productName));
+            System.out.println("The product name displayed is :"+$(lblproductName).getText());
             return true;
         } catch (Throwable e) {
             return false;
@@ -70,10 +71,12 @@ public class ProductDescriptionScreen {
         CombinedAttribute sauceLabBagDescritpionAttribute = CombinedAttribute.android("text").ios("value");
 
         try {
+            System.out.println("The product description is: "+$(txtProductDescription).getText());
             $(txtProductDescription)
                     .scrollTo()
                     .shouldBe(Condition.visible, Condition.interactable)
                     .shouldHave(AppiumCondition.attribute(sauceLabBagDescritpionAttribute, "carry.allTheThings() with the sleek, streamlined Sly Pack that melds uncompromising style with unequaled laptop and tablet protection."));
+
             return true;
         } catch (Throwable e) {
             return false;
