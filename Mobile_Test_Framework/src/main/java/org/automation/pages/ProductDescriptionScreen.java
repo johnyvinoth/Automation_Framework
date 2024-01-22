@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.appium.ScreenObject.screen;
+import static org.automation.utils.MobileUtils.clickElement;
 
 public class ProductDescriptionScreen {
 
@@ -32,7 +33,7 @@ public class ProductDescriptionScreen {
             .android(By.xpath("//android.view.ViewGroup[@content-desc='cart badge']/android.widget.ImageView"))
             .ios((By.id("tab bar option cart")));
 
-    //TODO: Need to finish the methods for the Product Description page and take one full flow of purchase.
+
     public Boolean checkProductPrice(String price) {
         CombinedAttribute priceTagAttribute = CombinedAttribute.android("text").ios("value");
 
@@ -59,7 +60,7 @@ public class ProductDescriptionScreen {
                     .scrollTo()
                     .shouldBe(Condition.visible, Condition.interactable)
                     .shouldHave(AppiumCondition.attribute(productNameAttribute, productName));
-            System.out.println("The product name displayed is :"+$(lblproductName).getText());
+            System.out.println("The product name displayed is :" + $(lblproductName).getText());
             return true;
         } catch (Throwable e) {
             return false;
@@ -71,7 +72,7 @@ public class ProductDescriptionScreen {
         CombinedAttribute sauceLabBagDescritpionAttribute = CombinedAttribute.android("text").ios("value");
 
         try {
-            System.out.println("The product description is: "+$(txtProductDescription).getText());
+            System.out.println("The product description is: " + $(txtProductDescription).getText());
             $(txtProductDescription)
                     .scrollTo()
                     .shouldBe(Condition.visible, Condition.interactable)
@@ -88,10 +89,11 @@ public class ProductDescriptionScreen {
 //        CombinedAttribute addToCartBtnAttribute = CombinedAttribute.android("text").ios("name");
 
         try {
-            $(btnAddToCart)
-                    .scrollTo()
-                    .shouldBe(Condition.visible, Condition.interactable)
-                    .click();
+//            $(btnAddToCart)
+//                    .scrollTo()
+//                    .shouldBe(Condition.visible, Condition.interactable)
+//                    .click();
+            clickElement(btnAddToCart);
 
 
         } catch (Throwable e) {
@@ -104,11 +106,11 @@ public class ProductDescriptionScreen {
 //        CombinedAttribute shoppingCartBtnAttribute = CombinedAttribute.android("text").ios("name");
 
         try {
-            $(btnCart)
-                    .scrollTo()
-                    .shouldBe(Condition.visible, Condition.interactable)
-                    .click();
-
+//            $(btnCart)
+//                    .scrollTo()
+//                    .shouldBe(Condition.visible, Condition.interactable)
+//                    .click();
+            clickElement(btnCart);
             return screen(ShoppingCartScreen.class);
         } catch (Throwable e) {
             System.out.println("Error occurred while clicking the add to cart button in description page" + e);
