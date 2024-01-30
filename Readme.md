@@ -8,8 +8,8 @@ This project is organized into several modules:
 
 - `Automation_Framework` (Project root folder)
     - `API_Framework` (Module) -- Completed
-    - `Web_UI_Selenium_Framework` (Module) -- Work in progress
-    - `Mobile_Framework` (Module) -- Yet to start
+    - `Web_UI_Selenium_Framework` (Module) -- Yet to Start
+    - `Mobile_Framework` (Module) -- Work in progress
 
 ## Instructions
 
