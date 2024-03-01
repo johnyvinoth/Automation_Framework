@@ -3,6 +3,7 @@ package org.automation.pages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.appium.conditions.CombinedAttribute;
 import com.codeborne.selenide.appium.selector.CombinedBy;
+import org.automation.utils.MobileUtils;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -19,11 +20,7 @@ public class ShoppingCartScreen {
         CombinedAttribute productListing = CombinedAttribute.android("text").ios("label");
 
         try {
-//            System.out.println("The shopping cart value is: "+ $(product).getText());
-
-            $(product)
-                    .scrollTo()
-                    .shouldBe(Condition.interactable, Condition.visible);
+            MobileUtils.checkElementVisibleInteractable(product);
             return true;
         } catch (Throwable e) {
             return false;

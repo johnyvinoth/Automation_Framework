@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.appium.AppiumCondition;
 import com.codeborne.selenide.appium.conditions.CombinedAttribute;
 import com.codeborne.selenide.appium.selector.CombinedBy;
+import org.automation.utils.MobileUtils;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -38,10 +39,7 @@ public class ProductDescriptionScreen {
         CombinedAttribute priceTagAttribute = CombinedAttribute.android("text").ios("value");
 
         try {
-            $(priceTag)
-                    .scrollTo()
-                    .shouldBe(Condition.visible, Condition.interactable)
-                    .shouldHave(AppiumCondition.attribute(priceTagAttribute, String.valueOf(price)));
+            MobileUtils.checkElementText(priceTag,priceTagAttribute,String.valueOf(price));
             String txtPriceTag = $(priceTag)
                     .getText();
             System.out.println("The price tag value is: " + txtPriceTag);
@@ -56,11 +54,8 @@ public class ProductDescriptionScreen {
         CombinedAttribute productNameAttribute = CombinedAttribute.android("text").ios("value");
 
         try {
-            $(lblproductName)
-                    .scrollTo()
-                    .shouldBe(Condition.visible, Condition.interactable)
-                    .shouldHave(AppiumCondition.attribute(productNameAttribute, productName));
             System.out.println("The product name displayed is :" + $(lblproductName).getText());
+            MobileUtils.checkElementText(lblproductName,productNameAttribute,productName);
             return true;
         } catch (Throwable e) {
             return false;
@@ -73,11 +68,7 @@ public class ProductDescriptionScreen {
 
         try {
             System.out.println("The product description is: " + $(txtProductDescription).getText());
-            $(txtProductDescription)
-                    .scrollTo()
-                    .shouldBe(Condition.visible, Condition.interactable)
-                    .shouldHave(AppiumCondition.attribute(sauceLabBagDescritpionAttribute, "carry.allTheThings() with the sleek, streamlined Sly Pack that melds uncompromising style with unequaled laptop and tablet protection."));
-
+            MobileUtils.checkElementText(txtProductDescription,sauceLabBagDescritpionAttribute,"carry.allTheThings() with the sleek, streamlined Sly Pack that melds uncompromising style with unequaled laptop and tablet protection.");
             return true;
         } catch (Throwable e) {
             return false;
@@ -89,13 +80,7 @@ public class ProductDescriptionScreen {
 //        CombinedAttribute addToCartBtnAttribute = CombinedAttribute.android("text").ios("name");
 
         try {
-//            $(btnAddToCart)
-//                    .scrollTo()
-//                    .shouldBe(Condition.visible, Condition.interactable)
-//                    .click();
             clickElement(btnAddToCart);
-
-
         } catch (Throwable e) {
             System.out.println("Error occured while clicking the add to cart button in description page" + e);
         }
@@ -106,10 +91,6 @@ public class ProductDescriptionScreen {
 //        CombinedAttribute shoppingCartBtnAttribute = CombinedAttribute.android("text").ios("name");
 
         try {
-//            $(btnCart)
-//                    .scrollTo()
-//                    .shouldBe(Condition.visible, Condition.interactable)
-//                    .click();
             clickElement(btnCart);
             return screen(ShoppingCartScreen.class);
         } catch (Throwable e) {

@@ -41,10 +41,14 @@ public class iOSMobileTest extends MobileTestBase {
         System.out.println("Dummy iOS Mobile Test success");
 //        $$(By.name("store item text")).get(0).click();
         HomeScreen homeScreen = new HomeScreen();
-        homeScreen.clickProduct();
+        try {
+            homeScreen.clickProduct();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    @Test(groups = "ios", enabled = false)
+    @Test(groups = "ios", enabled = true)
     public static void testCopyrightTextIsPresent() {
         HomeScreen homeScreen = new HomeScreen();
         Boolean copyrightTextPresent = homeScreen.checkWhetherCopyrightTextIsPresent();
@@ -62,7 +66,12 @@ public class iOSMobileTest extends MobileTestBase {
     @Test(groups = "ios", enabled = true)
     public static void addSauceLabBagToCartTest() {
         HomeScreen homeScreen = new HomeScreen();
-        ProductDescriptionScreen productDescriptionScreen = homeScreen.clickProduct();
+        ProductDescriptionScreen productDescriptionScreen = null;
+        try {
+            productDescriptionScreen = homeScreen.clickProduct();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         Assert.assertTrue(productDescriptionScreen.checkProductName("Sauce Labs Backpack"), "The product name doesn't match");
         Assert.assertTrue(productDescriptionScreen.checkProductPrice("$29.99"), "The product price doesn't match");
         Assert.assertTrue(productDescriptionScreen.checkSauceLabBagDescription(), "The product product description doesn't match");

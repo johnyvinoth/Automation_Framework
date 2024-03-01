@@ -8,6 +8,8 @@ import com.codeborne.selenide.appium.conditions.CombinedAttribute;
 import com.codeborne.selenide.appium.selector.CombinedBy;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
+import org.apache.maven.model.building.ModelBuilder;
+import org.automation.utils.MobileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -27,15 +29,10 @@ public class HomeScreen {
     private CombinedBy copyRightCombined = CombinedBy
             .android(By.xpath("//android.widget.TextView[@text='© 2024 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy.']"))
             .ios(By.xpath("//XCUIElementTypeStaticText[@name='© 2024 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy.']"));
-//XCUIElementTypeStaticText[@name="© 2024 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy."]
-    //android.widget.TextView[@text="© 2024 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy."]
-    public ProductDescriptionScreen clickProduct() {
-        CombinedBy SauceLabBag = CombinedBy.android(AndroidSauceLabBag).ios(iOsSauceLabBag);
 
-        $$(SauceLabBag)
-                .shouldBe(CollectionCondition.sizeGreaterThan(0))
-                .get(0)
-                .click();
+    public ProductDescriptionScreen clickProduct() throws Exception {
+        CombinedBy SauceLabBag = CombinedBy.android(AndroidSauceLabBag).ios(iOsSauceLabBag);
+        MobileUtils.clickElement(SauceLabBag,0);
         return screen(ProductDescriptionScreen.class);
     }
 
@@ -44,11 +41,7 @@ public class HomeScreen {
         CombinedAttribute attribute = CombinedAttribute.android("text").ios("name");
 
         try {
-
-            $(copyRightCombined)
-                    .scrollTo()
-                    .shouldBe(Condition.visible, Condition.interactable)
-                    .shouldHave(AppiumCondition.attribute(attribute, "© 2024 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy."));
+            MobileUtils.checkElementText(copyRightCombined,attribute,"© 2024 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy.");
             return true;
         } catch (Throwable e) {
 
