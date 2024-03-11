@@ -18,6 +18,7 @@ import java.net.URL;
 public class SauceLabsiOSProvider implements WebDriverProvider {
     private static final String IOS_DEVICE_NAME= ConfigurationUtils.getData("iOSDeviceName");
     private static final String IOS_APP_PATH=System.getProperty("user.dir")+ConfigurationUtils.getData("iOSAPKPath");
+    private static final String IOS_PLATFORM_VERSION=ConfigurationUtils.getData("iOSPlatformVersion");
     private static final String APPIUM_URL =ConfigurationUtils.getData("AppiumServer");
     @Nonnull
     @Override
@@ -27,6 +28,7 @@ public class SauceLabsiOSProvider implements WebDriverProvider {
 //        options.setAutomationName(AutomationName.ANDROID_UIAUTOMATOR2);
         options.setDeviceName(IOS_DEVICE_NAME);
         options.setApp(IOS_APP_PATH);
+        options.setPlatformVersion(IOS_PLATFORM_VERSION);
         try {
             URL appiumServerUrl= AppiumServerManager.getAppiumServerURL();
             return new IOSDriver(new URL(APPIUM_URL),options);

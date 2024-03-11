@@ -8,8 +8,8 @@ This project is organized into several modules:
 
 - `Automation_Framework` (Project root folder)
     - `API_Framework` (Module) -- Completed
-    - `Web_UI_Selenium_Framework` (Module) -- Yet to Start
-    - `Mobile_Framework` (Module) -- Work in progress
+    - `Web_UI_Selenium_Framework` (Module) -- Work in progress
+    - `Mobile_Test_Framework` (Module) -- Completed
 
 ## Instructions
 
@@ -39,11 +39,16 @@ cd Web_UI_Selenium_Framework
 mvn clean test
 ```
 
-### Mobile_Framework (Module)
-To run tests in the Mobile_Framework module, navigate to the Mobile_Framework directory and use this Maven command:
+### Mobile_Test_Framework (Module)
+Run the Appium server and the simulators for iOS and Android from their respective apps (iOS:-> Xcode, Android:->Android Studio) before running the test cases.
+```
+Appium
+```
+
+To run tests in the Mobile_Test_Framework module, navigate to the Mobile_Test_Framework directory and use this Maven command:
 
 ```
-cd Mobile_Framework
+cd Mobile_Test_Framework
 mvn clean test
 
 ```

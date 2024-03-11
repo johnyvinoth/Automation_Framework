@@ -36,3 +36,7 @@ public class SauceLabsAndroidProvider implements WebDriverProvider {
         }
     }
 }
+
+//TODO: Need to check why android emulator doesnt start automatically when the code runs
+// but iOS emulator does run automatically.
+
