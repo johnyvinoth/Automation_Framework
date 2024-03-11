@@ -40,6 +40,11 @@ mvn clean test
 ```
 
 ### Mobile_Framework (Module)
+Run the Appium server and the simulators for iOS and Android from their respective apps (iOS:-> Xcode, Android:->Android Studio) before running the test cases.
+```
+Appium
+```
+
 To run tests in the Mobile_Framework module, navigate to the Mobile_Framework directory and use this Maven command:
 
 ```
