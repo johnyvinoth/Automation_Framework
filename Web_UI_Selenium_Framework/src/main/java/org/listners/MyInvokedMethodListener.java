@@ -2,7 +2,6 @@ package org.listners;
 
 import org.testng.IInvokedMethod;
 import org.testng.IInvokedMethodListener;
-import org.testng.ITestListener;
 import org.testng.ITestResult;
 
 public class MyInvokedMethodListener implements IInvokedMethodListener {
