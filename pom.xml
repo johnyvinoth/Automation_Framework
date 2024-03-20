@@ -27,7 +27,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.1.2</version> <!-- Use the version you need -->
+                    <version>3.1.2</version>
                     <executions>
                         <execution>
                             <goals>
@@ -55,25 +55,7 @@
                             </goals>
                         </execution>
                     </executions>
-
                 </plugin>
-
-                <!--            <plugin>-->
-                <!--                <groupId>org.apache.maven.plugins</groupId>-->
-                <!--                <artifactId>maven-clean-plugin</artifactId>-->
-                <!--                <version>3.1.0</version>-->
-                <!--                <configuration>-->
-                <!--                    <filesets>-->
-                <!--                        <fileset>-->
-                <!--                            <directory>API_Framework/target</directory>-->
-                <!--                            <includes>-->
-                <!--                                <include>allure-results</include>-->
-                <!--                            </includes>-->
-                <!--                            <followSymlinks>false</followSymlinks>-->
-                <!--                        </fileset>-->
-                <!--                    </filesets>-->
-                <!--                </configuration>-->
-                <!--            </plugin>-->
             </plugins>
 
         </pluginManagement>
@@ -97,7 +79,7 @@
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-testng</artifactId>
-            <version>2.13.8</version> <!-- Use the version you need -->
+            <version>2.13.8</version>
         </dependency>
 
         <!--        Logs4j dependency-->
@@ -112,14 +94,6 @@
             <artifactId>log4j-core</artifactId>
             <version>2.21.0</version>
         </dependency>
-
-        <!--        <dependency>-->
-        <!--            <groupId>org.testng</groupId>-->
-        <!--            <artifactId>testng</artifactId>-->
-        <!--            <version>7.8.0</version>-->
-        <!--            <scope>compile</scope>-->
-        <!--        </dependency>-->
-
     </dependencies>
 
     <!--    allure.results.directory=Automation_Framework//Reports/allure-results-->
