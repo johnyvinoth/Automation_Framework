@@ -3,11 +3,17 @@ package runners;
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
+
 @RunWith(Cucumber.class)
+
 @CucumberOptions(
-        features = {"src/test/Features"},
-        glue = {"stepDefinitions"}
+        features = {"src/test/Features"}
+        , glue = {"stepDefinitions"},
+        dryRun = false
+
+
 )
-public class newTestRunner {
+
+public class padletTestSiteRunner {
 
 }

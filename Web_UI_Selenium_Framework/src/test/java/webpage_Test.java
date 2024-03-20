@@ -53,9 +53,12 @@ public class webpage_Test extends WebUITestBase {
 
     }
 
+    @Test(enabled = false)
 //    Question asked many times in Hackkerrank online test.
     public void TestHackkerrank(WebDriver driver, String pageUrl)
     {
+
+        //Hackkerrank Selenium interview coding test
 // Navigate to the given URL
         driver.get(pageUrl);
 // Find the input element and enter the value.

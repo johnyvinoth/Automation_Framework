@@ -6,9 +6,10 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         features = {"src/test/Features"}
-        , glue = {"stepDefinitions"}
+        , glue = {"stepDefinitions"},
+        dryRun = false
 )
 
-public class TestRunner {
+public class ChromeTestRunner {
 
 }

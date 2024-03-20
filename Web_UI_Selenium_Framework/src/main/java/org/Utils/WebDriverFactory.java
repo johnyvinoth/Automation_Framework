@@ -5,37 +5,46 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class WebDriverFactory {
     private static WebDriver driver;
+    private static final ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
 
-    public static WebDriver getWebDriver(String browserName) {
+    public static WebDriver createWebDriver(String browserName) {
         if (driver == null) {
-            switch (browserName.toLowerCase()) {
 
-                case "chrome": {
-                    driver = new ChromeDriver();
-                    break;
-                }
-                case "firefox": {
-                    driver = new FirefoxDriver();
-                    break;
-                }
-                case "safari": {
-                    driver = new SafariDriver();
-                    break;
-                }
-                default: {
-                    driver = new ChromeDriver();
-                    break;
-                }
+            if (browserName.toLowerCase().equals("chrome")) {
+                driver = new ChromeDriver();
+            } else if (browserName.toLowerCase().equals("firefox")) {
+                driver = new FirefoxDriver();
+
+            } else if (browserName.toLowerCase().equals("safari")) {
+                driver = new SafariDriver();
+
+            }else {
+                driver=new ChromeDriver();
             }
         }
-        return driver;
+        driver.manage().window().maximize();
+        WebDriverFactory.setWebDriver(driver);
+
+        return WebDriverFactory.getDriver();
     }
+
+    public static WebDriver getDriver() {
+        return driverThreadLocal.get();
+
+    }
+
+    public static void setWebDriver(WebDriver driver) {
+        driverThreadLocal.set(driver);
+    }
+
+    public static void removeWebDriver() {
+        driverThreadLocal.remove();
+    }
+
     public static void quitWebDriver() {
+        driver=WebDriverFactory.getDriver();
         if (driver != null) {
             driver.quit();
             driver = null;

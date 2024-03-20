@@ -1,27 +1,34 @@
 package org.pages;
 
 import org.Utils.WebUtils;
-import org.Utils.Web_UI_ConfigurationUtils;
+import org.automation.WebUITestBase;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainPage {
+public class MainPage extends WebUITestBase {
     private WebDriver driver;
 
+    @CacheLookup
     @FindBy(css = "button[data-testid='addCommentButton']")
     private List<WebElement> tiles = new ArrayList<>();
 
+
     @FindBy(css = "p[data-placeholder='Add comment']")
     private List<WebElement> commentsSection = new ArrayList<>();
+
+    @FindBy(css = "button[data-testid='surfaceAddPostButton']")
+    private WebElement addPostButton;
+
+    @FindBy(css = "a[data-testid='appBarAccountAvatar']")
+    private WebElement appBarAcctAvatar;
+
 
     public MainPage(WebDriver driver) {
         this.driver = driver;
@@ -36,30 +43,26 @@ public class MainPage {
 
     public void addComments(String comment) throws InterruptedException {
 
-        for(int i = 0; i <tiles.size(); i++)
-        {
+        for (int i = 0; i < tiles.size(); i++) {
             tiles.get(i).click();
-//            WebUtils.WaitUntilElementIsClickable(driver,commentsSection);
-            WebUtils.WaitUntilElementIsClickable(driver,  commentsSection.get(i));
-            commentsSection.get(i).sendKeys(comment+Math.random());
-//            Actions action = new Actions(driver);
-//            action.sendKeys(Keys.ENTER);
-//            action.perform();
+            WebUtils.WaitUntilElementsAreVisible(driver, commentsSection);
+//            WebUtils.WaitUntilElementIsClickable(driver,  By.cssSelector("p[data-placeholder='Add comment']"));
+            commentsSection.get(i).sendKeys(comment + "_" + Math.random());
             WebUtils.pressEnterButton(driver);
         }
-//        for(WebElement commentSec: commentsSection)
-//        {
-//            Thread.sleep(2000);
-//            WebUtils.WaitUntilElementIsClickable(driver, commentSec);
-//            commentSec.sendKeys(comment+"_"+Math.random());
-//            WebUtils.pressEnterButton(driver);
-//
-//        }
-        }
-
-        public void getTitle()
-        {
-            System.out.println("The Title is " + driver.getTitle());
-        }
+        logger.info("Comments added in the tiles");
     }
+
+    public void clickAddPostBtn() {
+        addPostButton.click();
+    }
+
+    public void clickAccountAvatarBtn() {
+        appBarAcctAvatar.click();
+    }
+
+    public void getTitle() {
+        System.out.println("The Title is " + driver.getTitle());
+    }
+}
 
