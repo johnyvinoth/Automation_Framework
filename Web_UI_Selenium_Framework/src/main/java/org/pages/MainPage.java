@@ -43,14 +43,22 @@ public class MainPage extends WebUITestBase {
 
     public void addComments(String comment) throws InterruptedException {
 
-        for (int i = 0; i < tiles.size(); i++) {
-            tiles.get(i).click();
-            WebUtils.WaitUntilElementsAreVisible(driver, commentsSection);
+        if(!tiles.isEmpty())
+        {
+            for (int i = 0; i < tiles.size(); i++) {
+                tiles.get(i).click();
+                WebUtils.WaitUntilElementsAreVisible(driver, commentsSection);
 //            WebUtils.WaitUntilElementIsClickable(driver,  By.cssSelector("p[data-placeholder='Add comment']"));
-            commentsSection.get(i).sendKeys(comment + "_" + Math.random());
-            WebUtils.pressEnterButton(driver);
+                commentsSection.get(i).sendKeys(comment + "_" + Math.random());
+                WebUtils.pressEnterButton(driver);
+            }
+            logger.info("Comments added in the tiles");
         }
-        logger.info("Comments added in the tiles");
+        else
+        {
+            System.out.println("No Tiles to update the comments");
+            logger.info("No Tiles to update the comments");
+        }
     }
 
     public void clickAddPostBtn() {
