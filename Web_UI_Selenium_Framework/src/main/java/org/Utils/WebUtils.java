@@ -17,9 +17,9 @@ public class WebUtils {
     public static final int POLLING_INTERVAL = 1;
 
 
-    public static void Wait(WebDriver driver, Duration waitTime) {
+    public static void Wait(WebDriver driver, long waitTime) {
 
-        driver.manage().timeouts().implicitlyWait(waitTime);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(waitTime));
 
     }
 
@@ -49,6 +49,7 @@ public class WebUtils {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
         wait.pollingEvery(Duration.ofSeconds(POLLING_INTERVAL));
 //        return wait.until(ExpectedConditions.elementToBeClickable(locator));
+
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
 
@@ -56,6 +57,12 @@ public class WebUtils {
         Actions action = new Actions(driver);
         action.sendKeys(Keys.ENTER);
         action.perform();
+    }
+    public static void waitForPageLoad(WebDriver driver)
+    {
+        WebDriverWait wait=new WebDriverWait(driver, Duration.ofSeconds(TIMEOUT));
+        wait.pollingEvery(Duration.ofSeconds(POLLING_INTERVAL));
+        wait.until(ExpectedConditions.jsReturnsValue("return document.readyState === 'complete';"));
     }
 
 

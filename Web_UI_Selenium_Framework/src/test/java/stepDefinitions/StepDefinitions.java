@@ -8,21 +8,28 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.Utils.PageObjectManager;
 import org.Utils.WebDriverFactory;
+import org.Utils.WebUtils;
 import org.Utils.Web_UI_ConfigurationUtils;
 import org.openqa.selenium.WebDriver;
+import org.pages.DashboardPage;
 import org.pages.LoginPage;
 import org.pages.MainPage;
 import org.pages.PasswordPage;
 import org.testng.Assert;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeSuite;
+
+import java.time.Duration;
 
 public class StepDefinitions {
     private WebDriver driver;
     private MainPage mainPage;
     private LoginPage loginPage;
     private PasswordPage passwordPage;
+    private DashboardPage dashboardPage;
 
-
-    @Before
+    @BeforeSuite
     public void setup() {
         System.out.println("Setup starting");
     }
@@ -35,9 +42,7 @@ public class StepDefinitions {
     @Given("Login to padlet site in {string} browser")
     public void login_to_padlet_site_in_browser(String browserName) throws InterruptedException {
         driver = WebDriverFactory.createWebDriver(browserName);
-//        driver.manage().window().maximize();
         driver.get(Web_UI_ConfigurationUtils.getProperty("padlet_url"));
-//        Thread.sleep(2000);
     }
 
     @When("user logs into the padlet site with valid login")
@@ -47,28 +52,13 @@ public class StepDefinitions {
 
         loginPage.enterTestMailId(Web_UI_ConfigurationUtils.getProperty("padlet_login_id"));
         loginPage.clikcTestContinueBtn();
-//        Thread.sleep(1000);
         passwordPage.setTestPasswordInputTxt(Web_UI_ConfigurationUtils.getProperty("padlet_password"));
-//        Thread.sleep(2000);
         passwordPage.clickTestLoginBtn();
     }
 
 
     @When("user click on Add comment and enters a new comment {string}")
     public void userClickOnAddCommentAndEntersANewCommentNewComment(String newComment) throws InterruptedException {
-
-//          List<WebElement> elements = driver.findElements(By.cssSelector("button[data-testid='addCommentButton']"));
-//        for (int i = 0; i < elements.size(); i++) {
-//
-//            elements.get(i).click();
-//            WebUtils.WaitUntilElementIsClickable(driver, By.cssSelector("p[data-placeholder='Add comment']"));
-//            List<WebElement> pelements = driver.findElements(By.cssSelector("p[data-placeholder='Add comment']"));
-//            pelements.get(i).sendKeys(newComment);
-//            Actions action = new Actions(driver);
-//            action.sendKeys(Keys.ENTER).perform();
-//
-//        }
-//        mainPage=new MainPage(driver);
         mainPage = PageObjectManager.getPageObject(driver, MainPage.class);
         mainPage.addComments(newComment);
         Thread.sleep(2000);
@@ -77,10 +67,10 @@ public class StepDefinitions {
 
     @Then("dashboard page will be displayed")
     public void dashboard_page_will_be_displayed() throws InterruptedException {
-        String PageTitle= driver.getTitle();
+        String PageTitle = driver.getTitle();
         Assert.assertEquals(PageTitle, "Dashboard | Padlet");
         System.out.println("Page Title: " + PageTitle);
-        Thread.sleep(2000);
+        WebUtils.waitForPageLoad(driver);
     }
 
     @Then("comment is added to the section")
@@ -88,11 +78,15 @@ public class StepDefinitions {
         System.out.println("Testing");
         mainPage = PageObjectManager.getPageObject(driver, MainPage.class);
         mainPage.getTitle();
-//        mainPage.clickAddPostBtn();
-
-
     }
-    @After
+
+    @Then("user logout from the padlet site")
+    public void user_logout_from_the_padlet_site() {
+        dashboardPage=PageObjectManager.getPageObject(driver, DashboardPage.class);
+        dashboardPage.logout();
+    }
+
+    @AfterSuite
     public void teardown() {
         WebDriverFactory.quitWebDriver();
         System.out.println("Tear down completed");
