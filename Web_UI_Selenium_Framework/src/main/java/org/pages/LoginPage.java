@@ -47,8 +47,8 @@ public class LoginPage {
 //        WebUtils.pressEnterButton(driver);
         return this;
         //TODO: Currently when chrome and firefox are executed simultaneously, the driver for firefox
-        // is still holding driver created for chrome so the elements are not getting identified and if firefox alone exectued
-        //then elements are getting located without any issue.
+        // is still holding driver created for chrome so the elements are not getting identified and
+        // if firefox alone exectuedthen elements are getting located without any issue.
 
         }
 
