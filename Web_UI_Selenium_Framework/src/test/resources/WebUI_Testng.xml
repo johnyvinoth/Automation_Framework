@@ -1,0 +1,26 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Web_UI_Selenium_Framework_Test_Suite">
+    <listeners>
+        <listener class-name="org.listners.MyInvokedMethodListener"></listener>
+    </listeners>
+    <test name="Web_UI_Selenium_Tests">
+
+        <groups>
+<!--            <run>-->
+<!--                <include name="Test2" />-->
+<!--                <include name="setup"/>-->
+<!--            </run>-->
+<!--            -->
+        </groups>
+
+        <classes>
+
+<!--            <class name="runners.ChromeTestRunner" />-->
+            <class name="webpage_Test"></class>
+            <!-- Add more test classes as needed -->
+        </classes>
+
+    </test>
+
+    <!-- You can add more <test> sections for different test configurations -->
+</suite>

@@ -36,9 +36,11 @@ build/
 
 ### Mac OS ###
 .DS_Store
-*.xml
+
 */allure-results/*.json
 *.log
 .idea/encodings.xml
 .idea/misc.xml
+
+/.idea
 

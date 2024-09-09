@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Web_UI_Selenium_Framework_Test_Suite" parallel="false">
+    <test name="Web_UI_Tests_Chrome" parallel="false">
+        <parameter name="browserName" value="Chrome"/>
+        <classes>
+            <class name="runners.ChromeTestRunner"/>
+        </classes>
+
+    </test>
+    <test name="Web_UI_Tests_FireFox" parallel="false">
+        <parameter name="browserName" value="FireFox"/>
+        <classes>
+            <class name="runners.FireFoxTestRunner"/>
+        </classes>
+
+    </test>
+    <!--    <test name="Web_UI_Tests_FireFox">-->
+    <!--        <classes>-->
+    <!--            <class name="runners.FireFoxTestRunner" />-->
+    <!--        </classes>-->
+    <!--    </test>-->
+</suite>
+
+
+
+
