@@ -42,21 +42,23 @@ public class LoginPage {
 
     public LoginPage enterTestMailId(String email) {
         WebUtils.WaitUntilElementIsClickable(driver, testUserName);
-//        WebUtils.clickElementWithJavaScript(driver, testUserName,10,1000);
+        // WebUtils.clickElementWithJavaScript(driver, testUserName,10,1000);
         testUserName.sendKeys(email);
-//        WebUtils.pressEnterButton(driver);
+        // WebUtils.pressEnterButton(driver);
         return this;
-        //TODO: Currently when chrome and firefox are executed simultaneously, the driver for firefox
-        // is still holding driver created for chrome so the elements are not getting identified and
-        // if firefox alone exectuedthen elements are getting located without any issue.
+        // TODO: Currently when chrome and firefox are executed simultaneously, the
+        // driver for firefox
+        // is still holding driver created for chrome so the elements are not getting
+        // identified
+        // and if firefox alone exectuedthen elements are getting located without any
+        // issue.
 
-        }
+    }
 
     public LoginPage clickTestContinueBtn() {
         WebUtils.WaitUntilElementIsClickable(driver, testContinueBtn);
         testContinueBtn.click();
         return this;
     }
-
 
 }
