@@ -43,4 +43,6 @@ build/
 .idea/misc.xml
 
 /.idea
-
+Web_UI_Selenium_Framework/allure-results
+API_Framework/allure-results
+allure-results
