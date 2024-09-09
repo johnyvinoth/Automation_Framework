@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.w3c.dom.html.HTMLInputElement;
 
 public class PasswordPage {
 
@@ -24,27 +23,32 @@ public class PasswordPage {
     public PasswordPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
+
     }
 
-    public void setPasswordInputTxt(String passwordTxt) {
+    public PasswordPage setPasswordInputTxt(String passwordTxt) {
         WebUtils.WaitUntilElementIsClickable(driver, passwordInputTxt);
         passwordInputTxt.sendKeys(passwordTxt);
         WebUtils.pressEnterButton(driver);
+        return this;
     }
 
-    public void setTestPasswordInputTxt(String passwordTxt) {
+    public PasswordPage setTestPasswordInputTxt(String passwordTxt) {
         WebUtils.WaitUntilElementIsClickable(driver, testPasswordInputTxt);
         testPasswordInputTxt.sendKeys(passwordTxt);
 //        WebUtils.pressEnterButton(driver);
+        return this;
     }
 
-    public void clickLoginBtn() {
+    public PasswordPage clickLoginBtn() {
         WebUtils.WaitUntilElementIsClickable(driver, loginBtn);
         loginBtn.click();
+        return this;
     }
 
-    public void clickTestLoginBtn() {
+    public PasswordPage clickTestLoginBtn() {
         WebUtils.WaitUntilElementIsClickable(driver, testLoginBtn);
         testLoginBtn.click();
+        return this;
     }
 }

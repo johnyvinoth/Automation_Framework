@@ -1,7 +1,6 @@
 package org.pages;
 
 import org.Utils.WebUtils;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,37 +15,47 @@ public class LoginPage {
     @FindBy(css = "button[data-testid='continueButton']")
     private WebElement continueBtn;
 
-      @FindBy(css = "input[data-testid='usernameInput']")
-     private WebElement testUserName;
+    @FindBy(css = "input[data-testid='usernameInput']")
+    private WebElement testUserName;
 
-      @FindBy(css = "button[data-testid='continueButton']")
-      private WebElement testContinueBtn;
+    @FindBy(css = "button[data-testid='continueButton']")
+    private WebElement testContinueBtn;
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
+
     }
 
-    public void enterMailId(String email) {
+    public LoginPage enterMailId(String email) {
         WebUtils.WaitUntilElementIsClickable(driver, emailIdInput);
         emailIdInput.sendKeys(email);
         WebUtils.pressEnterButton(driver);
+        return this;
     }
 
-    public void clikcContinueBtn() {
+    public LoginPage clickContinueBtn() {
         WebUtils.WaitUntilElementIsClickable(driver, continueBtn);
         continueBtn.click();
+        return this;
     }
 
-       public void enterTestMailId(String email) {
+    public LoginPage enterTestMailId(String email) {
         WebUtils.WaitUntilElementIsClickable(driver, testUserName);
+//        WebUtils.clickElementWithJavaScript(driver, testUserName,10,1000);
         testUserName.sendKeys(email);
 //        WebUtils.pressEnterButton(driver);
-    }
+        return this;
+        //TODO: Currently when chrome and firefox are executed simultaneously, the driver for firefox
+        // is still holding driver created for chrome so the elements are not getting identified and if firefox alone exectued
+        //then elements are getting located without any issue.
 
-    public void clikcTestContinueBtn() {
+        }
+
+    public LoginPage clickTestContinueBtn() {
         WebUtils.WaitUntilElementIsClickable(driver, testContinueBtn);
         testContinueBtn.click();
+        return this;
     }
 
 

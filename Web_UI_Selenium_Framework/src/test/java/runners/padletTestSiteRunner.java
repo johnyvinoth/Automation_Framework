@@ -19,15 +19,19 @@ import org.testng.annotations.BeforeSuite;
 )
 
 public class padletTestSiteRunner extends AbstractTestNGCucumberTests {
+    WebDriverFactory webDriverFactory = new WebDriverFactory();
+
+    //   WebDriverFactory webDriverFactory = new WebDriverFactory();
     @BeforeSuite
     public void setup() {
         System.out.println("Setup starting");
+//          driver = webDriverFactory.createWebDriver(browserName);
     }
 
 
     @AfterSuite
     public void teardown() {
-        WebDriverFactory.quitWebDriver();
+        webDriverFactory.quitWebDriver();
         System.out.println("Tear down completed");
     }
 
