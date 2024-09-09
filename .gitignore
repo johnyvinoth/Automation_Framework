@@ -36,9 +36,13 @@ build/
 
 ### Mac OS ###
 .DS_Store
-*.xml
+
 */allure-results/*.json
 *.log
 .idea/encodings.xml
 .idea/misc.xml
 
+/.idea
+Web_UI_Selenium_Framework/allure-results
+API_Framework/allure-results
+allure-results

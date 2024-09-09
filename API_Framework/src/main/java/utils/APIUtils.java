@@ -31,6 +31,7 @@ public class APIUtils {
     public static Response get(String endpoint) {
 //        System.out.println(requestSpec.header());
         return requestSpec.get(endpoint);
+
     }
 
     public static Response getWithParams(String endpoint, String paramName, String paramValue) {

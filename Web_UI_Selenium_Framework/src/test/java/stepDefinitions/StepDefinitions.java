@@ -1,26 +1,17 @@
 package stepDefinitions;
 
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
-import io.cucumber.java.BeforeStep;
+import io.cucumber.java.*;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.Utils.PageObjectManager;
-import org.Utils.WebDriverFactory;
-import org.Utils.WebUtils;
-import org.Utils.Web_UI_ConfigurationUtils;
+import org.Utils.*;
 import org.openqa.selenium.WebDriver;
 import org.pages.DashboardPage;
 import org.pages.LoginPage;
 import org.pages.MainPage;
 import org.pages.PasswordPage;
 import org.testng.Assert;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeSuite;
 
-import java.time.Duration;
 
 public class StepDefinitions {
     private WebDriver driver;
@@ -29,19 +20,33 @@ public class StepDefinitions {
     private PasswordPage passwordPage;
     private DashboardPage dashboardPage;
 
-    @BeforeSuite
-    public void setup() {
-        System.out.println("Setup starting");
-    }
+
+    //    NewWebDriverFactory newDriverFactory = new NewWebDriverFactory();
+    WebDriverFactory webDriverFactory = new WebDriverFactory();
 
     @BeforeStep
+
     public void waitBeforeEachStep() throws InterruptedException {
         Thread.sleep(1000);
+
     }
 
+
     @Given("Login to padlet site in {string} browser")
-    public void login_to_padlet_site_in_browser(String browserName) throws InterruptedException {
-        driver = WebDriverFactory.createWebDriver(browserName);
+    public void login_to_padlet_site_in_browser(String broserName) {
+        WebDriverFactory webDriverFactory = new WebDriverFactory();
+        driver = webDriverFactory.createWebDriver(broserName);
+        driver.get(Web_UI_ConfigurationUtils.getProperty("padlet_url"));
+    }
+
+
+    @Given("Login to padlet test site")
+    public void login_to_padlet_test_site() throws InterruptedException {
+//        WebDriverFactory webDriverFactory = new WebDriverFactory();
+//        driver=new WebDriverFactory().getDriver();
+
+//        WebDriverFactory webDriverFactory = new WebDriverFactory();
+        driver = webDriverFactory.getDriver();
         driver.get(Web_UI_ConfigurationUtils.getProperty("padlet_url"));
     }
 
@@ -50,10 +55,17 @@ public class StepDefinitions {
         loginPage = PageObjectManager.getPageObject(driver, LoginPage.class);
         passwordPage = PageObjectManager.getPageObject(driver, PasswordPage.class);
 
-        loginPage.enterTestMailId(Web_UI_ConfigurationUtils.getProperty("padlet_login_id"));
-        loginPage.clikcTestContinueBtn();
-        passwordPage.setTestPasswordInputTxt(Web_UI_ConfigurationUtils.getProperty("padlet_password"));
-        passwordPage.clickTestLoginBtn();
+//        loginPage.enterTestMailId(Web_UI_ConfigurationUtils.getProperty("padlet_login_id"));
+//        loginPage.clikcTestContinueBtn();
+//        passwordPage.setTestPasswordInputTxt(Web_UI_ConfigurationUtils.getProperty("padlet_password"));
+//        passwordPage.clickTestLoginBtn();
+
+        loginPage
+                .enterTestMailId(Web_UI_ConfigurationUtils.getProperty("padlet_login_id"))
+                .clickTestContinueBtn();
+        passwordPage
+                .setTestPasswordInputTxt(Web_UI_ConfigurationUtils.getProperty("padlet_password"))
+                .clickTestLoginBtn();
     }
 
 
@@ -67,6 +79,8 @@ public class StepDefinitions {
 
     @Then("dashboard page will be displayed")
     public void dashboard_page_will_be_displayed() throws InterruptedException {
+        WebUtils.waitForPageLoad(driver);
+        Thread.sleep(5000);
         String PageTitle = driver.getTitle();
         Assert.assertEquals(PageTitle, "Dashboard | Padlet");
         System.out.println("Page Title: " + PageTitle);
@@ -82,13 +96,11 @@ public class StepDefinitions {
 
     @Then("user logout from the padlet site")
     public void user_logout_from_the_padlet_site() {
-        dashboardPage=PageObjectManager.getPageObject(driver, DashboardPage.class);
+        dashboardPage = PageObjectManager.getPageObject(driver, DashboardPage.class);
         dashboardPage.logout();
+        webDriverFactory.quitWebDriver(driver);
+
     }
 
-    @AfterSuite
-    public void teardown() {
-        WebDriverFactory.quitWebDriver();
-        System.out.println("Tear down completed");
-    }
+
 }

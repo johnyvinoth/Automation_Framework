@@ -25,7 +25,7 @@ public class AuthTokenProvider {
 //                .log().all()
                 .post(AUTH_URL);
 
-        //TODO: Need to check why this getAuthToken function is failing during this post operation.
+        //TODO: getAuthToken function is failing during this post operation is due to McAfee firewall is blocking the operations.
 
         // Extract and return the authorization token from the response
         return response.jsonPath().getString("token");

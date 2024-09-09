@@ -5,19 +5,39 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class WebDriverFactory {
+    private static WebDriverFactory instance = null;
 
-    private static final ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
-    private static WebDriver driver;
+//    private static final ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
 
-    public static WebDriver createWebDriver(String browserName) {
-        driver = driverThreadLocal.get();
+    private ThreadLocal<WebDriver> driverThreadLocal = ThreadLocal.withInitial(() -> null);
+//    private ThreadLocal<Map<String,WebDriver> > driverThreadLocal = ThreadLocal.withInitial(HashMap::new);
+
+
+//    private WebDriverFactory() {
+//
+//    }
+//
+//    public static WebDriverFactory getInstance() {
+//        if (instance == null) {
+//            instance = new WebDriverFactory();
+//        }
+//        return instance;
+//    }
+
+    //private static WebDriver driver;
+    public  WebDriver createWebDriver(String browserName) {
+
+        WebDriver driver = driverThreadLocal.get();
         if (driver == null) {
-            if (browserName.toLowerCase().equals("chrome")) {
+            if (browserName.equalsIgnoreCase("chrome")) {
                 driver = new ChromeDriver();
-            } else if (browserName.toLowerCase().equals("firefox")) {
+            } else if (browserName.equalsIgnoreCase("firefox")) {
                 driver = new FirefoxDriver();
-            } else if (browserName.toLowerCase().equals("safari")) {
+            } else if (browserName.equalsIgnoreCase("safari")) {
                 driver = new SafariDriver();
             } else {
                 driver = new ChromeDriver();
@@ -25,17 +45,29 @@ public class WebDriverFactory {
             driver.manage().window().maximize();
             driverThreadLocal.set(driver);
         }
-        return driver;
-    }
-
-    public static WebDriver getDriver() {
+        System.out.println("Create Web Driver is called for the browser " + browserName);
         return driverThreadLocal.get();
     }
 
-    public static void quitWebDriver() {
+    public WebDriver getDriver() {
+        System.out.println("getDriver method is called" + driverThreadLocal.toString());
+//        driverThreadLocal.set(driver);
+        return driverThreadLocal.get();
+    }
+
+    public void quitWebDriver() {
+        WebDriver driver = driverThreadLocal.get();
         if (driver != null) {
+//            driver=null;
             driver.quit();
-            driverThreadLocal.remove();
+            driverThreadLocal.set(null);
+        }
+    }
+
+    public void quitWebDriver(WebDriver driver) {
+        if (driver != null) {
+            driver.close();
+            driver.quit();
         }
     }
 
